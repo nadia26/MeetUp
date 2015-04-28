@@ -1,3 +1,4 @@
+
 function initialize() {
     var mapOptions = {
         center: { lat: 40.815, lng: -74.0059},
@@ -7,3 +8,5 @@ function initialize() {
 				  mapOptions);
 }
 google.maps.event.addDomListener(window, 'load', initialize);
+document.getElementById("myModal").style.visibility = "visible";
+document.getElementById("myModal").style.display = "inline";
