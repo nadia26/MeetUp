@@ -1,4 +1,5 @@
-# meetup
+# meetUp
+#Aida Piccato, Sydney Caputo, Nadia Saleh
 ## timeline
 ### Sunday, May 3rd - Complete a search algorithm with Google maps that will find an intermediate point given two addresses. 
 ### Thursday, May 7th - Complete transit directions
