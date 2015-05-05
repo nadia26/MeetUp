@@ -18,6 +18,12 @@ def index():
 def results(addresses):
 	return render_template("results.html")
 
+@app.route("/suggestions", methods=["GET","POST"])
+def suggestions(mspot,ptype):
+        #mspot will be the address that they are meeting at
+        #ptype=
+        return render_template("suggestions.html")
+        
 if __name__=="__main__":
    app.debug=True
    app.run()
