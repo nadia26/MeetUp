@@ -10,13 +10,15 @@ def index():
 			'address1': request.form['address1'],
 			'address2': request.form['address2']
 		}
-		return redirect(url_for('results', addresses=addresses))
+		return redirect(url_for('results',addresses=addresses))
    	else:
    		return render_template("main.html")
 
 @app.route("/results/<addresses>", methods=["GET","POST"])
 def results(addresses):
-	return render_template("results.html")
+        print "ADDRESSES:"
+        print addresses
+	return render_template("results.html", addresses=addresses)
 
 if __name__=="__main__":
    app.debug=True
