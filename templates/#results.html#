@@ -3,6 +3,7 @@
 {% block body %}
 
 Addresses: {{ addresses }} <br>
+Address 1: {{ addresses[0] }}
 
 
 {% endblock %}
