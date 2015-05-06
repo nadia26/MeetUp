@@ -1,0 +1,25 @@
+<!-- {% extends "base.html" %}--> 
+<!--{% block head %}-->
+
+<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUNHf_NW-4AgJFFRI1KKK06U7FNz2JZYw">
+</script>
+<form class="form-inline" method="POST">
+      <div class="modal-body">
+        <div class="form-group">
+	  <label for="mlat">Latitude</label>
+            <input type="text" class="form-control" placeholder="latitude" name="mLat">
+          </div><div class="modal-body">
+        <div class="form-group">
+	  <label for="mlong">Long</label>
+            <input type="text" class="form-control" placeholder="longitude" name="mLong">
+          </div>
+         
+    </form>
+          <button type="submit" name="b" value="submit"class="btn btn-default">Search</button>
+      
+
+<script src="gplaces.js"></script>
+
+
+<!--{% endblock %}-->
