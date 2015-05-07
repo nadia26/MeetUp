@@ -18,6 +18,11 @@ def index():
 def results(addresses):
 	return render_template("results.html")
 
+##This route is just for transit maps testing
+@app.route("/transit")
+def transit():
+        return render_template("transit_maps.html")
+
 if __name__=="__main__":
    app.debug=True
    app.run()
