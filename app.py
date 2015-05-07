@@ -20,19 +20,9 @@ def results(addresses):
 
 @app.route("/test", methods=["GET","POST"])
 def test():
-        #mspot will be the address that they are meeting at
-        #ptype=
-       	if request.method == "POST":
-		print request.form
-		mspot = {
-			'mLat': request.form['mLat'],
-			'mLong': request.form['mLong']
-		}
-                return redirect(url_for('suggestions', mspot=mspot))
-        else:
-                return render_template("test.html")
+        return render_template("test.html")
 
-@app.route("/suggestions", methods=["GET","POST"])
+@app.route("/suggestions/<mspot>", methods=["GET","POST"])
 def suggestions(mspot):
         return render_template("suggestions.html")
 

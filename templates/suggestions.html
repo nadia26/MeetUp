@@ -1,9 +1,15 @@
 {% extends "base.html" %}
 {% block head %}
 
-<script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUNHf_NW-4AgJFFRI1KKK06U7FNz2JZYw">
+
+ 
 </script>
-mspot = {{ mspot }}
-<script src="gplaces.js"></script>
+<h1> hello </h1>
+<script>
+  var mspot = {{ mspot|tojson|safe }};
+  console.log(mspot);
+
+  </script>
 {% endblock %}
+<script src="gplaces.js"> 
+</script>
