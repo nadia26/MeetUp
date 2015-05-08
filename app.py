@@ -16,7 +16,7 @@ def index():
 
 @app.route("/results/<addresses>", methods=["GET","POST"])
 def results(addresses):
-    return render_template("results.html", addresses = addresses)
+    return render_template("results.html", addresses=addresses)
 
 if __name__=="__main__":
     app.debug=True
