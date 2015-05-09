@@ -16,6 +16,9 @@ function initialize() {
 google.maps.event.addDomListener(window, 'load', initialize);
 
 function calcRoute() {
+	//Start will be address1, end will be the intermediate point between address1 and address2
+	//Maybe we can display two maps, one from users house and one from friends house? and the
+	//routes they'll each take to the intermediate point. 
   var start = "Toronto";
   var end = "Montreal";
   var request = {
