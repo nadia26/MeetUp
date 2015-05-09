@@ -19,7 +19,7 @@ def results(addresses):
 	return render_template("results.html")
 
 ##This route is just for transit maps testing
-@app.route("/transit")
+@app.route("/transit", methods=["GET"])
 def transit():
         return render_template("transit_maps.html")
 
