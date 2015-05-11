@@ -1,40 +1,35 @@
 console.log("hello");
-var findNear = function(mlat,mlong){
-    var loc = new google.maps.LatLng(mlat,mlong);
+var nearResults=[];
+var map;
+var service;
+var infowindow;
 
-    map = new google.maps.Map(document.getElementById('map-canvas'), {
-	center: loc,
-	zoom: 15
-    });
+function findNear(mlat, mlong){
+    mlat =  -33.8665433;
+    mlong= 151.1956316;
+    var loc  = new google.maps.LatLng(mlat, mlong);
 
+   // map = new google.maps.Map(document.getElementById('map'), {
+//	center: loc,
+//	zoom: 15
+  //  });
 
-   
     var request = {
 	location: loc,
 	radius: '500',
-	types:['restuarant']
+	query: 'resturant'
     };
-    
-    var infowindow = new google.maps.InfoWindow();
-    var service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, callback);
+
+  service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, callback);
 }
 
-function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
+function callback(results, status){
+    if (status== google.maps.places.PlacesService.OK){
+	for (var i =0; i<results.length ; i++){
+	    console.log(results[i]);
+	}
     }
-  }
 }
 
-function createMarker(place) {
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location
-  });
-
-   
-element= document.getElementById("b");
-element.addEventListener('click', findNear(40.713,-74.0142));
+document.getElementById("b").addEventListener('click', findNear(40.713,-74.0142));
