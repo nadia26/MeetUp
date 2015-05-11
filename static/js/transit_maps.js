@@ -1,26 +1,27 @@
-var directionsDisplay;
+var directionsDisplay1 = new google.maps.DirectionsRenderer();
+var directionsDisplay2 = new google.maps.DirectionsRenderer();
 var directionsService = new google.maps.DirectionsService();
-var map;
+var map1;
+var map2;
 
 function initialize() {
-  directionsDisplay = new google.maps.DirectionsRenderer();
   var chicago = new google.maps.LatLng(41.850033, -87.6500523);
   var mapOptions = {
     zoom:7,
     center: chicago
-  }
-  map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-  directionsDisplay.setMap(map);
+  };
+  map1 = new google.maps.Map(document.getElementById("map-canvas1"), mapOptions);
+  map2 = new google.maps.Map(document.getElementById("map-canvas2"), mapOptions);
+  directionsDisplay1.setMap(map2);
+  directionsDisplay2.setMap(map1);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
-function calcRoute() {
+function calcRoute(start, end, directionsDisplay) {
 	//Start will be address1, end will be the intermediate point between address1 and address2
 	//Maybe we can display two maps, one from users house and one from friends house? and the
 	//routes they'll each take to the intermediate point. 
-  var start = "Toronto";
-  var end = "Montreal";
   var request = {
     origin:start,
     destination:end,
@@ -32,3 +33,7 @@ function calcRoute() {
     }
   });
 }
+
+calcRoute("Montreal", "Toronto", directionsDisplay1);
+calcRoute("Toronto", "Montreal", directionsDisplay2);
+
