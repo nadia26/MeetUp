@@ -13,7 +13,9 @@ function initialize() {
   map1 = new google.maps.Map(document.getElementById("map-canvas1"), mapOptions);
   map2 = new google.maps.Map(document.getElementById("map-canvas2"), mapOptions);
   directionsDisplay1.setMap(map2);
+  directionsDisplay1.setPanel(document.getElementById('directions-panel1'));
   directionsDisplay2.setMap(map1);
+  directionsDisplay2.setPanel(document.getElementById('directions-panel2'));
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
