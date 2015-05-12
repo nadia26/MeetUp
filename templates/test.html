@@ -1,25 +1,84 @@
-{% extends "base.html" %}
-{% block head %}
-
-<script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUNHf_NW-4AgJFFRI1KKK06U7FNz2JZYw">
-</script>
+<!DOCTYPE html>
+<html>
+  <head>
+hello
 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-<style>
-  html, body, #map-canvas {
-  height: 100%;
-  margin: 0px;
-  padding: 0px
+    <style>
+
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+
+    </style>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+    <script>
+var map;
+var infowindow;
+var namesList = [];
+var mLat;
+var mLong;
+var rSize; <!--will allow the user to pick the radius of the location -->
+var placeType = [] <!--will allow the user to pick different places: ie restaurant, stores, etc -->
+
+function initialize(mLat, mLong, rSize) {
+mLat = 40.7183;
+mLong = -74.0142;
+var loc = new google.maps.LatLng(mLat, mLong);
+
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
+    center: loc,
+    zoom: 15
+  });
+
+rSize = 500;
+  var request = {
+    location: loc,
+    radius: rSize,
+    types: ['restaurant']
+  };
+
+  infowindow = new google.maps.InfoWindow();
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, callback);
+}
+
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+			console.log(results[i]["name"]);
+			<!--> namesList.push(results[i]["name"]); -->
+			createMarker(results[i]);
+    }
   }
-</style>
-{% endblock %}
-{% block body %}
+}
+for (var i = 0; i < namesList.length; i++) {
+		    console.log(namesList[i]);
+}
 
-<button  id="b" value="submit" class="btn btn-default">Search</button>
-<script src="../static/js/gplaces.js">
-<div id="map-canvas"></div></script>
-{% endblock %} 
+function createMarker(place) {
+  var placeLoc = place.geometry.location;
+  var marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location
+  });
 
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(place.name);
+    infowindow.open(map, this);
+  });
+}
 
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+<!-- from the google maps api, taken a modified a little--> 
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>
