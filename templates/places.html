@@ -25,7 +25,7 @@ var mLong;
 var rSize; <!--will allow the user to pick the radius of the location -->
 var placeType = []; <!--will allow the user to pick different places: ie restaurant, stores, etc -->
 
-function initialize(mLat, mLong, rSize) {
+function initialize(mLat, mLong, rSize, placeType) {
 mLat = 40.7183;
 mLong = -74.0142;
 var loc = new google.maps.LatLng(mLat, mLong);
@@ -36,10 +36,11 @@ var loc = new google.maps.LatLng(mLat, mLong);
   });
 -->
 rSize = 500;
+placeType.push("restaurant");
   var request = {
     location: loc,
     radius: rSize,
-    types: ['restaurant']
+    types: placeType
   };
 
   infowindow = new google.maps.InfoWindow();
@@ -50,9 +51,13 @@ rSize = 500;
 function callback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 0; i < results.length; i++) {
+      
 			namesList.push(results[i]["name"]);
 			createMarker(results[i]);
    }
+    for (var i = 0; i <results.length; i++) {
+      console.log(namesList[i]);
+    }
 		}
 }
 
