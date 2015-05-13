@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-hello
+hello b
 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -23,7 +23,7 @@ var namesList = [];
 var mLat;
 var mLong;
 var rSize; <!--will allow the user to pick the radius of the location -->
-var placeType = []; <!--will allow the user to pick different places: ie restaurant, stores, etc -->
+var placeType = [] <!--will allow the user to pick different places: ie restaurant, stores, etc -->
 
 function initialize(mLat, mLong, rSize) {
 mLat = 40.7183;
@@ -50,10 +50,14 @@ rSize = 500;
 function callback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 0; i < results.length; i++) {
+			
 			namesList.push(results[i]["name"]);
 			createMarker(results[i]);
    }
-		}
+			for (var i = 0; i < namesList.length; i++) {
+					    console.log(namesList[i]);
+					    }
+  }
 }
 
 
