@@ -1,7 +1,7 @@
 # meetUp
 #Aida Piccato, Sydney Caputo, Nadia Saleh
 ## timeline
-### As of May 11 - Have completed initial form, dual display of results
+### As of May 11 - Have completed initial form, dual display of results, also have finished the nearby places--just need to link it to the form 
 ### May 17 - Complete a algorithm to find intermediate point in transit route
   COMPLETED ON MAY 12!
 ### May 20 - Display transit directions. Give options for preffered meeting places
