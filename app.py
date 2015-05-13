@@ -25,7 +25,7 @@ def transit():
 
 @app.route("/test", methods=["GET","POST"])
 def test():
-        return render_template("test.html")
+        return render_template("places.html")
 
 @app.route("/suggestions/<mspot>", methods=["GET","POST"])
 def suggestions(mspot):
