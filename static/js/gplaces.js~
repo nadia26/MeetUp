@@ -1,0 +1,44 @@
+var mspot= [{lat: 40.7183, longi:-74.0142}];
+var map;
+var service;
+var infowindow;
+
+function findNear(mspot){
+    var loc = new google.maps.LatLng(mspot[0],mspot[1]);
+
+    map = new google.maps.Map(document.getElementById('map-canvas'), {
+	center: loc,
+	zoom: 15
+    });
+
+
+    map= new google.maps.
+    var request ={
+	location: loc,
+	radius: '500'
+	types:['restuarant']
+    };
+    
+    infowindow = new google.maps.InfoWindow();
+    var service = new google.maps.places.PlacesService(map);
+    service.nearbySearch(request, callback);
+}
+
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      createMarker(results[i]);
+    }
+  }
+}
+
+function createMarker(place) {
+  var placeLoc = place.geometry.location;
+  var marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location
+  });
+
+    console.log("hello");
+element= document.getElementById("b");
+element.addEventListener('click', findNear(mspot));

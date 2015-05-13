@@ -18,6 +18,15 @@ def index():
 def results(addresses):
 	return render_template("results.html")
 
+@app.route("/test", methods=["GET","POST"])
+def test():
+        return render_template("test.html")
+
+@app.route("/suggestions/<mspot>", methods=["GET","POST"])
+def suggestions(mspot):
+        return render_template("suggestions.html")
+
+
 if __name__=="__main__":
    app.debug=True
    app.run()
