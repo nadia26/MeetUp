@@ -1,43 +1,3 @@
-/*
-
-var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
-var map;
-
-
-function initialize() {
-  directionsDisplay = new google.maps.DirectionsRenderer();
-  var chicago = new google.maps.LatLng(41.850033, -87.6500523);
-  var mapOptions = {
-    zoom:7,
-    center: chicago
-  }
-  map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-  directionsDisplay.setMap(map);
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
-
-function calcRoute() {
-	//Start will be address1, end will be the intermediate point between address1 and address2
-	//Maybe we can display two maps, one from users house and one from friends house? and the
-	//routes they'll each take to the intermediate point. 
-  var start = "108 E 2nd St, Brooklyn, NY, 11218";
-  var end = "345 Chambers Street, Manhattan, NY, 10282";
-  var request = {
-    origin:start,
-    destination:end,
-    travelMode: google.maps.TravelMode.TRANSIT
-  };
-  directionsService.route(request, function(result, status) {
-    if (status == google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(result);
-    }
-  });
-}
-*/
-
-
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
@@ -61,9 +21,6 @@ function createMarker(latlng, label, html) {
     return marker;
 }
 
-
-// === A method which returns a google.maps.LatLng of a point a given distance along the path ===
-// === Returns null if the path is shorter than the specified distance ===
 google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
     // some awkward special cases
     if (metres == 0) return this.getPath().getAt(0);
@@ -126,8 +83,6 @@ function calcRoute() {
                 endLocation = new Object();
                 directionsDisplay.setDirections(response);
                 var route = response.routes[0];
-                var summaryPanel = document.getElementById("directions_panel");
-                summaryPanel.innerHTML = "";
                  //figure out error
                 // For each route, display summary information.
                 var path = response.routes[0].overview_path;
@@ -169,9 +124,6 @@ function computeTotalDistance(result) {
         totalTime += myroute.legs[i].duration.value;
     }
     putMarkerOnRoute(50);
-    
-    totalDist = totalDist / 1000.
-    document.getElementById("total").innerHTML = "total distance is: "+ totalDist + " km<br>total time is: " + (totalTime / 60).toFixed(2) + " minutes";
     
 }
 
