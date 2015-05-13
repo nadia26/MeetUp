@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block head %}
+<script type="text/javascript" 
+           src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyCUNHf_NW-4AgJFFRI1KKK06U7FNz2JZYw"></script>
+{% endblock %}
+{% block body %}
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        meetUp
+      </a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<div class="row">
+  <div class="col-md-6">
+  	<div class="panel panel-info">
+  		<div class="panel-heading">Route from Address 1 to Midpoint</div>
+  		<div class="panel-body">
+  			<div id="map-canvas1" style="width:100%;height:70%"></div>
+  		</div>
+  	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div id="directions-panel1" style="width:100%;height 70%"></div>
+		</div>
+	</div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-info">
+    	<div class="panel-heading">Route from Address 2 to Midpoint</div>
+    	<div class="panel-body">
+  			<div id="map-canvas2" style="width:100%;height:70%"></div>
+  		</div>
+  	</div>
+  	<div class="panel panel-default">
+		<div class="panel-body">
+			<div id="directions-panel2" style="width:100%;height 70%"></div>
+		</div>
+	</div>
+  </div>
+</div>
+<!--<div id="directionsPanel" style="float:right;width:30%;height 100%"></div>-->
+</div>
+<script src="../static/js/transit_maps.js"></script>
+{% endblock %}
