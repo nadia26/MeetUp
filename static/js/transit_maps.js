@@ -4,6 +4,8 @@ var map;
 var polyline = null;
 var infowindow = new google.maps.InfoWindow();
 
+var midpoint;
+
 function createMarker(latlng, label, html) {
     var contentString = '<b>'+label+'</b><br>'+html;
     var marker = new google.maps.Marker({
@@ -41,7 +43,8 @@ google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
     var p1= this.getPath().getAt(i-2);
     var p2= this.getPath().getAt(i-1);
     var m = (metres-olddist)/(dist-olddist);
-    return new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
+    midpoint = new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
+    return midpoint;
 }
 
 function initialize() {
@@ -60,21 +63,19 @@ function initialize() {
                                         strokeWeight: 3
                                         });
     directionsDisplay.setMap(map);
-    calcRoute();
+    var start = "108 E 2nd St Brooklyn NY 11218";
+    var end = "345 Chambers St Manhattan NY 10282";
+    calcRoute(start, end);
     console.log("done!");
 }
 
-function calcRoute() {
-    var start = "108 E 2nd St Brooklyn NY 11218";
-    var end = "345 Chambers St Manhattan NY 10282";
+function calcRoute(start, end) {
     var travelMode = google.maps.DirectionsTravelMode.TRANSIT
-    
     var request = {
     origin: start,
     destination: end,
     travelMode: travelMode
     };
-    
     directionsService.route(request, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
                 polyline.setPath([]);
@@ -83,7 +84,6 @@ function calcRoute() {
                 endLocation = new Object();
                 directionsDisplay.setDirections(response);
                 var route = response.routes[0];
-                 //figure out error
                 // For each route, display summary information.
                 var path = response.routes[0].overview_path;
                 var legs = response.routes[0].legs;
@@ -107,6 +107,7 @@ function calcRoute() {
                 polyline.setMap(map);
                 computeTotalDistance(response);
                 } else {
+                    //not entirely sure what this is for/what it doesd
                     alert("directions response "+status);
                     }
                 });
@@ -115,6 +116,7 @@ function calcRoute() {
 
 var totalDist = 0;
 var totalTime = 0;
+
 function computeTotalDistance(result) {
     totalDist = 0;
     totalTime = 0;
@@ -123,21 +125,14 @@ function computeTotalDistance(result) {
         totalDist += myroute.legs[i].distance.value;
         totalTime += myroute.legs[i].duration.value;
     }
-    putMarkerOnRoute(50);
+    findPoint(50);
     
 }
 
-function putMarkerOnRoute(percentage) {
+function findPoint(percentage) {
     var distance = (percentage/100) * totalDist;
-    var time = ((percentage/100) * totalTime/60).toFixed(2);
-    if (!marker) {
-        marker = createMarker(polyline.GetPointAtDistance(distance),"time: "+time,"marker");
-    } else {
-        marker.setPosition(polyline.GetPointAtDistance(distance));
-        marker.setTitle("time:"+time);
-    }
+    polyline.GetPointAtDistance(distance);
 }
 
 
 google.maps.event.addDomListener(window, 'load', initialize);
-

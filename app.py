@@ -14,6 +14,14 @@ def index():
     else:
         return render_template("main.html")
 
+
+
+
+#Testing for two-panel midpoint directions
+@app.route("/directions", methods=["GET"])
+def directions():
+    return render_template("directions.html")
+
 @app.route("/results/<addresses>", methods=["GET","POST"])
 def results(addresses):
     return render_template("results.html", addresses=addresses)
