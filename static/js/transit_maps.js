@@ -6,23 +6,6 @@ var infowindow = new google.maps.InfoWindow();
 
 var midpoint;
 
-function createMarker(latlng, label, html) {
-    var contentString = '<b>'+label+'</b><br>'+html;
-    var marker = new google.maps.Marker({
-                                        position: latlng,
-                                        map: map,
-                                        title: label,
-                                        zIndex: Math.round(latlng.lat()*-100000)<<5
-                                        });
-    marker.myname = label;
-    
-    google.maps.event.addListener(marker, 'click', function() {
-                                  infowindow.setContent(contentString+"<br>"+marker.getPosition().toUrlValue(6));
-                                  infowindow.open(map,marker);
-                                  });
-    return marker;
-}
-
 google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
     // some awkward special cases
     if (metres == 0) return this.getPath().getAt(0);
@@ -65,11 +48,11 @@ function initialize() {
     directionsDisplay.setMap(map);
     var start = "108 E 2nd St Brooklyn NY 11218";
     var end = "345 Chambers St Manhattan NY 10282";
-    calcRoute(start, end);
+    findMiddle(start, end);
     console.log("done!");
 }
 
-function calcRoute(start, end) {
+function findMiddle(start, end) {
     var travelMode = google.maps.DirectionsTravelMode.TRANSIT
     var request = {
     origin: start,
@@ -91,7 +74,6 @@ function calcRoute(start, end) {
                     if (i == 0) {
                         startLocation.latlng = legs[i].start_location;
                         startLocation.address = legs[i].start_address;
-                        marker = createMarker(legs[i].start_location,"midpoint","","green");
                     }
                     endLocation.latlng = legs[i].end_location;
                     endLocation.address = legs[i].end_address;
@@ -115,15 +97,12 @@ function calcRoute(start, end) {
 }
 
 var totalDist = 0;
-var totalTime = 0;
 
 function computeTotalDistance(result) {
     totalDist = 0;
-    totalTime = 0;
     var myroute = result.routes[0];
     for (i = 0; i < myroute.legs.length; i++) {
         totalDist += myroute.legs[i].distance.value;
-        totalTime += myroute.legs[i].duration.value;
     }
     findPoint(50);
     
