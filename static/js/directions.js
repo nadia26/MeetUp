@@ -1,7 +1,17 @@
 console.log("directions.js");
-var midpoint;
-var address1 = "108 E 2nd St Brooklyn NY 11218";
-var address2 = "345 Chambers St Manhattan NY 10282";
+console.log(addresses);
+
+/*
+addresses = addresses.replace(/'/g, '"'); //"
+addresses = addresses.replace(/u"/g, '"');
+console.log(addresses);
+addresses = JSON.parse(addresses);
+console.log(addresses);
+ */
+
+
+var address1 = addresses['address1'];
+var address2 = addresses['address2'];
 
 
 //HAVE TO MAKE MIDPOINT A LATLNG OBJECT
@@ -15,8 +25,7 @@ var polyline = null;
 
 
 function initialize() {
-    initMid();
-    //initMaps();
+    //initMid();
 }
 
 function initMid() {

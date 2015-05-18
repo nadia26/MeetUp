@@ -7,6 +7,16 @@
         display:none;
     }
 </style>
+
+
+
+<script>
+    var addresses = {{ addresses|tojson|safe }}
+    </script>
+
+
+
+
 {% endblock %}
 {% block body %}
 <nav class="navbar navbar-default">

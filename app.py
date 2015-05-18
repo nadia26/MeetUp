@@ -10,21 +10,16 @@ def index():
             'address1':request.form['address1'],
             'address2':request.form['address2']
         }
-        return redirect(url_for('results', addresses=addresses))
+        return redirect(url_for('directions', addresses=addresses))
     else:
         return render_template("main.html")
 
 
 
 
-#Testing for two-panel midpoint directions
-@app.route("/directions", methods=["GET"])
-def directions():
-    return render_template("directions.html")
-
-@app.route("/results/<addresses>", methods=["GET","POST"])
-def results(addresses):
-    return render_template("results.html", addresses=addresses)
+@app.route("/directions/<addresses>", methods=["GET","POST"])
+def directions(addresses):
+    return render_template("directions.html", addresses=addresses)
 
 ##This route is just for transit maps testing
 @app.route("/transit", methods=["GET"])
