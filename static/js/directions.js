@@ -151,6 +151,7 @@ function initMaps(midpoint) {
     directionsDisplay2.setPanel(document.getElementById('directions-panel2'));
     calcRoute(address1, midpoint, directionsDisplay1);
     calcRoute(address2, midpoint, directionsDisplay2);
+    console.log("done!");
 }
 
 
