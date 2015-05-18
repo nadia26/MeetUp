@@ -5,6 +5,8 @@ var address2 = "Toronto";
 
 function initialize() {
     initMid();
+    //initMaps();
+    console.log(midpoint);
 }
 
 //var directionDisplay;
@@ -115,8 +117,6 @@ google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
     midpoint = new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
     return midpoint;
 }
-
-
 
 
 
