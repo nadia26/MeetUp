@@ -1,24 +1,97 @@
-var directionDisplay;
+var midpoint;
+var address1 = "Montreal";
+var address2 = "Toronto";
+
+
+function initialize() {
+    initMid();
+    //initMaps();
+    console.log(midpoint);
+}
+
+//var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
 var polyline = null;
-var infowindow = new google.maps.InfoWindow();
 
-function createMarker(latlng, label, html) {
-    var contentString = '<b>'+label+'</b><br>'+html;
-    var marker = new google.maps.Marker({
-                                        position: latlng,
-                                        map: map,
-                                        title: label,
-                                        zIndex: Math.round(latlng.lat()*-100000)<<5
-                                        });
-    marker.myname = label;
+
+function initMid() {
+    //directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers:true});
+    var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+    var myOptions = {
+    zoom: 6,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: chicago
+    }
     
-    google.maps.event.addListener(marker, 'click', function() {
-                                  infowindow.setContent(contentString+"<br>"+marker.getPosition().toUrlValue(6));
-                                  infowindow.open(map,marker);
-                                  });
-    return marker;
+    map = new google.maps.Map(document.getElementById("midpoint-canvas"), myOptions);
+    polyline = new google.maps.Polyline({
+                                        path: [],
+                                        strokeColor: '#FF0000',
+                                        strokeWeight: 3
+                                        });
+    //directionsDisplay.setMap(map);
+    findMiddle(address1, address2);
+    console.log("done!");
+}
+
+
+
+
+
+function findMiddle(start, end) {
+    var travelMode = google.maps.DirectionsTravelMode.TRANSIT
+    var request = {
+        origin: start,
+        destination: end,
+        travelMode: travelMode
+    };
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            polyline.setPath([]);
+            var bounds = new google.maps.LatLngBounds();
+            startLocation = new Object();
+            endLocation = new Object();
+            //directionsDisplay.setDirections(response);
+            var route = response.routes[0];
+            // For each route, display summary information.
+            var path = response.routes[0].overview_path;
+            var legs = response.routes[0].legs;
+            for (i=0;i<legs.length;i++) {
+                if (i == 0) {
+                    startLocation.latlng = legs[i].start_location;
+                    startLocation.address = legs[i].start_address;
+                }
+                endLocation.latlng = legs[i].end_location;
+                endLocation.address = legs[i].end_address;
+                var steps = legs[i].steps;
+                for (j=0;j<steps.length;j++) {
+                    var nextSegment = steps[j].path;
+                        for (k=0;k<nextSegment.length;k++) {
+                            polyline.getPath().push(nextSegment[k]);
+                            bounds.extend(nextSegment[k]);
+                        }
+                }
+            }
+        polyline.setMap(map);
+        distance = computeTotalDistance(response);
+        distance = distance / 2;
+        return polyline.GetPointAtDistance(distance);
+        } else {
+            //not entirely sure what this is for/what it does
+            alert("directions response "+status);
+            }
+        });
+    
+}
+
+function computeTotalDistance(result) {
+    var totalDist = 0;
+    var myroute = result.routes[0];
+    for (i = 0; i < myroute.legs.length; i++) {
+        totalDist += myroute.legs[i].distance.value;
+    }
+    return totalDist;
 }
 
 google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
@@ -41,103 +114,10 @@ google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
     var p1= this.getPath().getAt(i-2);
     var p2= this.getPath().getAt(i-1);
     var m = (metres-olddist)/(dist-olddist);
-    return new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
+    midpoint = new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
+    return midpoint;
 }
 
-function initialize() {
-    directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers:true});
-    var chicago = new google.maps.LatLng(41.850033, -87.6500523);
-    var myOptions = {
-    zoom: 6,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    center: chicago
-    }
-    
-    map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
-    polyline = new google.maps.Polyline({
-                                        path: [],
-                                        strokeColor: '#FF0000',
-                                        strokeWeight: 3
-                                        });
-    directionsDisplay.setMap(map);
-    calcRoute();
-    console.log("done!");
-}
-
-function calcRoute() {
-    var start = "108 E 2nd St Brooklyn NY 11218";
-    var end = "345 Chambers St Manhattan NY 10282";
-    var travelMode = google.maps.DirectionsTravelMode.TRANSIT
-    
-    var request = {
-    origin: start,
-    destination: end,
-    travelMode: travelMode
-    };
-    
-    directionsService.route(request, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                polyline.setPath([]);
-                var bounds = new google.maps.LatLngBounds();
-                startLocation = new Object();
-                endLocation = new Object();
-                directionsDisplay.setDirections(response);
-                var route = response.routes[0];
-                 //figure out error
-                // For each route, display summary information.
-                var path = response.routes[0].overview_path;
-                var legs = response.routes[0].legs;
-                for (i=0;i<legs.length;i++) {
-                    if (i == 0) {
-                        startLocation.latlng = legs[i].start_location;
-                        startLocation.address = legs[i].start_address;
-                        marker = createMarker(legs[i].start_location,"midpoint","","green");
-                    }
-                    endLocation.latlng = legs[i].end_location;
-                    endLocation.address = legs[i].end_address;
-                    var steps = legs[i].steps;
-                    for (j=0;j<steps.length;j++) {
-                        var nextSegment = steps[j].path;
-                        for (k=0;k<nextSegment.length;k++) {
-                            polyline.getPath().push(nextSegment[k]);
-                            bounds.extend(nextSegment[k]);
-                        }
-                    }
-                }
-                polyline.setMap(map);
-                computeTotalDistance(response);
-                } else {
-                    alert("directions response "+status);
-                    }
-                });
-                  
-}
-
-var totalDist = 0;
-var totalTime = 0;
-function computeTotalDistance(result) {
-    totalDist = 0;
-    totalTime = 0;
-    var myroute = result.routes[0];
-    for (i = 0; i < myroute.legs.length; i++) {
-        totalDist += myroute.legs[i].distance.value;
-        totalTime += myroute.legs[i].duration.value;
-    }
-    putMarkerOnRoute(50);
-    
-}
-
-function putMarkerOnRoute(percentage) {
-    var distance = (percentage/100) * totalDist;
-    var time = ((percentage/100) * totalTime/60).toFixed(2);
-    if (!marker) {
-        marker = createMarker(polyline.GetPointAtDistance(distance),"time: "+time,"marker");
-    } else {
-        marker.setPosition(polyline.GetPointAtDistance(distance));
-        marker.setTitle("time:"+time);
-    }
-}
 
 
 google.maps.event.addDomListener(window, 'load', initialize);
-

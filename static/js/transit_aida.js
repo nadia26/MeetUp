@@ -18,7 +18,7 @@ function initialize() {
   directionsDisplay2.setPanel(document.getElementById('directions-panel2'));
 }
 
-   google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initialize);
 
 function calcRoute(start, end, directionsDisplay) {
 	//Start will be address1, end will be the intermediate point between address1 and address2
