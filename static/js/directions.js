@@ -13,21 +13,13 @@ var address1 = addresses['address1'];
 var address2 = addresses['address2'];
 
 
-//HAVE TO MAKE MIDPOINT A LATLNG OBJECT
-
-
 //var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
 var polyline = null;
 
 
-
 function initialize() {
-    initMid();
-}
-
-function initMid() {
     //directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers:true});
     var chicago = new google.maps.LatLng(41.850033, -87.6500523);
     var myOptions = {
@@ -94,7 +86,7 @@ function findMiddle(start, end) {
                             //not entirely sure what this is for/what it does
                             alert("directions response "+status);
                             }
-                            });    
+                            });
 }
 
 
