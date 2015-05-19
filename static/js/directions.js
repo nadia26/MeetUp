@@ -1,13 +1,12 @@
 console.log("directions.js");
 console.log(addresses);
 
-/*
+
 addresses = addresses.replace(/'/g, '"'); //"
 addresses = addresses.replace(/u"/g, '"');
 console.log(addresses);
 addresses = JSON.parse(addresses);
 console.log(addresses);
- */
 
 
 var address1 = addresses['address1'];
@@ -25,7 +24,7 @@ var polyline = null;
 
 
 function initialize() {
-    //initMid();
+    initMid();
 }
 
 function initMid() {
@@ -95,9 +94,7 @@ function findMiddle(start, end) {
                             //not entirely sure what this is for/what it does
                             alert("directions response "+status);
                             }
-                            });
-    return midpoint;
-    
+                            });    
 }
 
 
