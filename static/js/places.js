@@ -1,6 +1,31 @@
-console.log("places.js");
+var App = new Marionette.Application();
+App.addRegions({
+  collregion: "#collection-region"
+});
+var RestaurantCollection = Backbone.Collection.extend({
+  model: RestaurantModel
+});
+
+var RestaurantModel = Backbone.Model.extend({
+  url: "/restaurant",
+  idAttribute: "_id"
+});
+
+App.RestaurantView = Marionette.ItemView.extend({
+  template: "#restaurant-template",
+  tagName: "panel panel-default"
+});
+
+App.RestaurantsCompositeView = Marionette.CompositeView.extend({
+  childView: App.RestaurantView,
+  childViewContainer : "#accordion",
+  template: "#restaurants-template"
+});
+
+var restaurants = new RestaurantCollection();
+var initialized = false;
+
 var infowindow;
-var namesList = [];
 
 function initializePlaces() {
 	var request = {
@@ -17,14 +42,25 @@ function callback(results, status) {
   console.log(status);
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 0; i < results.length; i++) {
-      
-		namesList.push(results[i]["name"]);
-		createMarker(results[i]);
-   }
-    for (var i = 0; i <results.length; i++) {
-      console.log(namesList[i]);
-    }
+      console.log(results[i]);
+      results[i]["open_string"] = "";
+      if (results[i]["opening_hours"]["open_now"]) {
+        results[i]["open_string"] = "Open Now";
+      }
+      else {
+        results[i]["open_string"] = "Not Open"
+      }
+      var p = parseInt(results[i]["price_level"]);
+      results[i]["price_string"] = "";
+      while (p > 0) {
+        results[i]["price_string"] += "$";
+        p = p - 1;
+      };
+      restaurants.unshift(new RestaurantModel(results[i]));
+  		createMarker(results[i]);
+     }
 		}
+    console.log(restaurants);
 }
 function createMarker(place) {
   var placeLoc = place.geometry.location;
@@ -37,7 +73,14 @@ function createMarker(place) {
     infowindow.open(map, this);
   });
 }
+
+
 document.getElementById("display").addEventListener('click', function(e) {
-	initializePlaces();
-	document.getElementById("display").setAttribute("disabled", "disabled");
+  if (!initialized){
+    initializePlaces();
+    initialized = true;
+  };
+  var rcompview = new App.RestaurantsCompositeView({collection:restaurants});
+  App.collregion.show(rcompview);
+	document.getElementById("display").setAttribute("hidden", "hidden");
 });
