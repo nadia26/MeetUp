@@ -5,7 +5,6 @@ var address2 = "345 Chambers St Manhattan NY 10282";
 
 //var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
-var map;
 var polyline = null;
 
 function initialize() {
@@ -30,9 +29,6 @@ function initMid() {
     //directionsDisplay.setMap(map);
     return findMiddle(address1, address2);
 }
-
-
-
 
 
 function findMiddle(start, end) {
@@ -114,8 +110,10 @@ google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
     var p1= this.getPath().getAt(i-2);
     var p2= this.getPath().getAt(i-1);
     var m = (metres-olddist)/(dist-olddist);
-    var a = new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
+    a = new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
+
     //console logging from here works
+    
     return a
 }
 
