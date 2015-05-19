@@ -14,9 +14,6 @@ def index():
     else:
         return render_template("main.html")
 
-
-
-
 #Testing for two-panel midpoint directions
 @app.route("/directions", methods=["GET"])
 def directions():
@@ -34,10 +31,6 @@ def transit():
 @app.route("/test", methods=["GET","POST"])
 def test():
         return render_template("places.html")
-
-@app.route("/suggestions/<mspot>", methods=["GET","POST"])
-def suggestions(mspot):
-        return render_template("suggestions.html")
 
 
 if __name__=="__main__":

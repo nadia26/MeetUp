@@ -7,6 +7,11 @@
         display:none;
     }
 </style>
+<!--<script>
+  $(function () {
+    $('#myTab a[href="#route1"]').tab('show')
+  })
+</script>-->
 {% endblock %}
 {% block body %}
 <nav class="navbar navbar-default">
@@ -20,35 +25,31 @@
 </nav>
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="panel panel-info">
-                <div class="panel-heading">Route from Address 1 to Midpoint</div>
+                <div class="panel-heading">Directions</div>
                 <div class="panel-body">
-                    <div id="map-canvas1" style="width:100%;height:70%"></div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div id="directions-panel1" style="width:100%;height 70%"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-info">
-                <div class="panel-heading">Route from Address 2 to Midpoint</div>
-                <div class="panel-body">
-                    <div id="map-canvas2" style="width:100%;height:70%"></div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div id="directions-panel2" style="width:100%;height 70%"></div>
+                    <div id="map-canvas" style="width:100%;height:70%"></div>
                 </div>
             </div>
         </div>
     </div>
-    <!--<div id="directionsPanel" style="float:right;width:30%;height 100%"></div>-->
-</div>
+    <div class="row">
+        <div class="col-md-8">
+
+            <div class="panel" role="tabpanel">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation"><a aria-controls="route1" href="#route1" role="tab" data-toggle="tab">Your House to Midpoint</a></li>
+                    <li role="presentation"><a href="#route2" role="tab" data-toggle="tab">Your Friend's House to Midpoint</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id="route1"></div>
+                    <div role="tabpanel" class="tab-pane" id="route2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 <div id="midpoint-canvas" style="float:left;width:70%; height:100%"></div>
 <script src="../static/js/directions.js"></script>
 {% endblock %}
