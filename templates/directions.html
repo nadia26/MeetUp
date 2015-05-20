@@ -22,7 +22,7 @@ var map;
 <div class="panel panel-default">
 <div class="panel-heading">
 <h4 class="panel-title">
-    <a data-toggle="collapse" data-parent="#accordion" href="#<%= place_id%>" aria-expanded="true" aria-controls="collapseOne">
+    <a data-toggle="collapse" id="#heading" data-parent="#accordion" href="#<%= place_id%>" aria-expanded="true" aria-controls="collapseOne">
       <%- name%>
     </a>
 </h4>
@@ -69,7 +69,12 @@ var map;
             </div>
         </div>
         <div class="col-md-4">
-            <button class="btn btn-info" href="#collection-region" data-toggle="collapse" id="display">Display nearby restaurants</button>
+            <div class="row">
+                <button class="btn btn-info" href="#collection-region" data-toggle="collapse" id="displayRestaurants">Display nearby restaurants</button>
+            </div>
+            <div class="row">
+                <button class="btn btn-info" href="#collection-region" data-toggle="collapse" id="displayBakeries">Display nearby bakeries or cafes</button>
+            </div>
             <div id="collection-region">
             <!-- This is where the collection of restaurant items should display-->
             </div>
