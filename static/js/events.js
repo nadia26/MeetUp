@@ -1,6 +1,18 @@
 
 var midPoint= "40.7178801,-74.0137509";
 var eventsArray=[];
+//from the list we should take:
+//latitude
+//longitude
+//description
+//start_time
+//stop_time
+//title
+//description
+//venue_name 
+
+
+
 
 var getEvents= $.ajax({
 	url: "http://api.eventful.com/json/events/search?&app_key=cWNxSHrggxxJH23h&where="+midPoint+"&within=1&date=Today",
