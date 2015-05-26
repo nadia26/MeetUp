@@ -2,7 +2,8 @@ var App = new Marionette.Application();
 
 App.addRegions({
   restregion: "#restaurant-region",
-  bakeregion: "#bakery-region"
+  bakeregion: "#bakery-region",
+  eventregion: "#event-region"
 });
 
 var RestaurantCollection = Backbone.Collection.extend({
@@ -33,15 +34,16 @@ App.RestaurantsCompositeView = Marionette.CompositeView.extend({
 
 var restaurants = new RestaurantCollection();
 var bakeries = new RestaurantCollection();
-var initialized = {
+initialized = {
   "restaurant" : false,
-  "bakery" : false
+  "bakery" : false,
+  "event" : false
 }
 var infowindow;
 var restaurantChoiceButtons = [];
 var markers = [];
 
-function initialize(type) {
+function restaurantInitialize(type) {
   var request = {
     location: a,
     radius: 500,
@@ -50,7 +52,6 @@ function initialize(type) {
   infowindow = new google.maps.InfoWindow();
   var service = new google.maps.places.PlacesService(map);
   service.nearbySearch(request, callback);
-  //restaurantChoiceButtons = createChoiceButtons("chooseRestaurant");
 }
 
 function callback(results, status) {
@@ -73,7 +74,7 @@ function callback(results, status) {
         results[i]["price_string"] += "$";
         p = p - 1;
       };
-      results[i]["marker"] = createMarker(results[i]);
+      results[i]["marker"] = createMarker(results[i].geometry.location, results[i].name);
       if (results[0]["types"].indexOf("bakery") > -1) {
         results[i]["type"] = "bakery";
         bakeries.unshift(new RestaurantModel(results[i]));
@@ -87,16 +88,14 @@ function callback(results, status) {
 		}
 }
 
-function createMarker(place) {
-  var placeLoc = place.geometry.location;
+function createMarker(location,name) {
   var marker = new google.maps.Marker({
     map: map,
-    position: place.geometry.location,
+    position: location,
   });
   google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-
+    infowindow.setContent(name);
+    infowindow.open(map, name);
   });
   return marker;
 }
@@ -104,8 +103,7 @@ function createMarker(place) {
 
 document.getElementById("display-restaurants").addEventListener('click', function(e) {
   if (!initialized["restaurant"]){
-    initialize("restaurant");
-    console.log("hlo");
+    restaurantInitialize("restaurant");
     initialized["restaurant"] = true;
     var rcompview = new App.RestaurantsCompositeView({collection:restaurants});
     App.restregion.show(rcompview);
@@ -114,7 +112,7 @@ document.getElementById("display-restaurants").addEventListener('click', functio
 
 document.getElementById("display-bakeries").addEventListener('click', function(e) {
   if (!initialized["bakery"]){
-    initialize("bakery");
+    restaurantInitialize("bakery");
     initialized["bakery"] = true;
     var bcompview = new App.RestaurantsCompositeView({collection:bakeries});
     App.bakeregion.show(bcompview);
@@ -136,7 +134,6 @@ function chooseRestaurant(place_name) {
   }
   else {
     var b = bakeries.findWhere({name:place_name});
-    console.log(b);
     for (var i = 0; i < bakeries.models.length; i++){
       if (bakeries.at(i) != b) {
         bakeries.at(i).attributes.marker.setMap(null);
@@ -144,18 +141,7 @@ function chooseRestaurant(place_name) {
 
     }
     bakeries.reset(b);
+    document.getElementById("events-panel").style.visibility = "visible";
   }
 }
-
-
-// function createChoiceButtons(name) {
-//   var l = document.getElementsByName(name);
-//   console.log(l);
-//   for (var j = 0; j < l.length; j++) {
-//     console.log(l[j]);
-//     l[j].addEventListener('click', function(e) {
-//       console.log("hello");
-//     });
-//   };
-// };
 

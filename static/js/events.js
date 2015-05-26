@@ -1,6 +1,3 @@
-
-var midPoint= "40.7178801,-74.0137509";
-var eventsArray=[];
 //from the list we should take:
 //latitude
 //longitude
@@ -11,19 +8,52 @@ var eventsArray=[];
 //description
 //venue_name 
 
-
-
-
-var getEvents= $.ajax({
-	url: "http://api.eventful.com/json/events/search?&app_key=cWNxSHrggxxJH23h&where="+midPoint+"&within=1&date=Today",
-	dataType: 'jsonp',
-	success: function(results){
-		for (i=0; i < results["events"]["event"].length; i++){
-			eventsArray.push(results["events"]["event"][""+i+""]);
-		}
-		console.log(eventsArray[0]);
-		console.log(eventsArray);
-	}
+var EventsCollection = Backbone.Collection.extend({
+  model: EventModel
 });
 
-$("loadRes").click(getEvents);	
+var EventModel = Backbone.Model.extend({
+  url: "/event",
+  idAttribute: "_id"
+});
+
+App.EventView = Marionette.ItemView.extend({
+  template: "#event-template",
+  tagName: "panel panel-default",
+  events: {
+    "click .panel-title": function() {
+      infowindow.setContent(this.model.attributes.title);
+      infowindow.open(map,this.model.attributes.marker);
+    }
+  }
+});
+
+App.EventsCompositeView = Marionette.CompositeView.extend({
+  childView: App.EventView,
+  childViewContainer : "#accordion",
+  template: "#events-template"
+});
+
+events = new EventsCollection();
+
+
+function eventInitialize() {
+   infowindow = new google.maps.InfoWindow();
+   for (var i = 0; i < events.models.length; i++) {
+
+	   	var model = events.models[i].attributes;
+	   	var loc = new google.maps.LatLng(parseFloat(model.latitude), parseFloat(model.longitude));
+	   	console.log(loc)
+	   	var m = createMarker(loc, model.title);
+	   	events.models[i].set("marker", m);
+   }
+}
+document.getElementById("display-events").addEventListener('click', function(e) {
+  if (!initialized["event"]){
+    eventInitialize();
+    console.log(events);
+    initialized["event"] = true;
+    var ecompview = new App.EventsCompositeView({collection:events});
+    App.eventregion.show(ecompview);
+  }
+});
