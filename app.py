@@ -30,7 +30,7 @@ def transit():
 
 @app.route("/test", methods=["GET","POST"])
 def test():
-        return render_template("places.html")
+        return render_template("eventResults.html")
 
 
 if __name__=="__main__":
