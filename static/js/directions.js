@@ -1,4 +1,4 @@
-//console.log("directions.js");
+console.log("directions.js");
 //console.log(addresses);
 
 
@@ -26,7 +26,6 @@ function initialize() {
 }
 
 function initMid() {
->>>>>>> master
     //directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers:true});
     var chicago = new google.maps.LatLng(41.850033, -87.6500523);
     var myOptions = {
