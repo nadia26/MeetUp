@@ -15,6 +15,8 @@
 <script>
 var a;
 var map;
+var calcRoute;
+var address1, address2;
 </script>
 {% endblock %}
 {% block body %}
@@ -33,12 +35,13 @@ var map;
 <p><%- vicinity%></p>
 <p>Rating: <%- rating%></p>
 <p>Price Level: <%- price_string%></p>
+<button class="btn btn-default" value="<%= type%> <%= name%>" onclick="chooseRestaurant(this.value)" name="chooseRestaurant"><span class="glyphicon glyphicon-map-marker"></span></button> 
 </div>
 </div>
 </div>
 </script>
 
-<script type="text/template" id="restaurants-template">
+<!--<script type="text/template" id="restaurants-template">
 <div class="panel panel-info">
 <div class="panel-heading">
 <div class="panel-title">Nearby Restaurants</div>
@@ -48,7 +51,12 @@ var map;
 </div>
 </div>
 </div>
+</script>-->
+<script type="text/template" id="restaurants-template">
+<div class="panel-group" id="accordion" style="overflow: scroll;height: 70%;"role="tablist" aria-multiselectable="true">
+</div>
 </script>
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -70,17 +78,46 @@ var map;
         </div>
         <div class="col-md-4">
             <div class="row">
-                <button class="btn btn-info" href="#collection-region" data-toggle="collapse" id="displayRestaurants">Display nearby restaurants</button>
-            </div>
-            <div class="row">
-                <button class="btn btn-info" href="#collection-region" data-toggle="collapse" id="displayBakeries">Display nearby bakeries or cafes</button>
-            </div>
-            <div id="collection-region">
+                <div class="panel-group" id="list-group" role="tablist" aria-multiselectable="true">
+
+                <div class="panel panel-info">
+                    <div class="panel-heading" id="heading" role="tab">
+                        <div class="panel-title">
+                            <a id="display-restaurants" data-parent="#list-group" data-toggle="collapse" href="#rbody" aria-expanded="true" aria-controls="rbody">
+                            Nearby Restaurants</a>
+                        </div>
+                    </div>
+                    <div id="rbody" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                        <div id="restaurant-region"></div>
+                        </div>
             <!-- This is where the collection of restaurant items should display-->
+                    </div>
+                </div>
+
+                <div class="panel panel-info" id="bakeries-panel" style="visibility:hidden;">
+                    <div class="panel-heading"role="tab">
+                        <div class="panel-title">
+                            <a id="display-bakeries" data-parent="#list-group" data-toggle="collapse" href="#bbody" aria-expanded="true" aria-controls="bbody">
+                            Nearby Bakeries </a>
+                        </div>
+                    </div>
+                    <div id="bbody" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div id="bakery-region"></div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            <!-- <div class="row">
+                <button class="btn btn-info" href="#collection-region" data-toggle="collapse" id="displayBakeries">Display nearby bakeries or cafes</button>
+            </div> 
+            <div id="bakery-region">
+            </div>-->
             </div>
         </div>
-
-    </div>
+     </div>
     <div class="row">
         <div class="col-md-8">
             <div class="panel" role="tabpanel">
