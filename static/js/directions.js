@@ -92,8 +92,9 @@ function findMiddle(start, end) {
                             //console logging from here works
                             initMaps(midpoint);
                             } else {
-                            //not entirely sure what this is for/what it does
-                            alert("No directions could be found.");
+                            console.log("no directions + commented out redirect");
+                            alert("Sorry! No directions could be found.");
+                            //window.location.href = "http://meetup.crabdance.com/";
                             }
                             });
 }
