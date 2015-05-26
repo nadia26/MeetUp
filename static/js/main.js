@@ -16,7 +16,7 @@ var getCurrentLocation = function(){
 	}
 }
 
-b1.addEventListener('click',getCurrentLocation);
+//b1.addEventListener('click',getCurrentLocation);
 function initialize() {
     var mapOptions = {
 	center: { lat:40.7881,  lng: -73.95,},
