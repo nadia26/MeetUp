@@ -1,22 +1,13 @@
-console.log("directions.js");
 var midpoint;
 var address1 = "108 E 2nd St Brooklyn NY 11218";
 var address2 = "345 Chambers St Manhattan NY 10282";
 
-
-//HAVE TO MAKE MIDPOINT A LATLNG OBJECT
-
-
 //var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
-var map;
 var polyline = null;
-
-
 
 function initialize() {
     initMid();
-    //initMaps();
 }
 
 function initMid() {
@@ -26,7 +17,7 @@ function initMid() {
     zoom: 6,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     center: chicago
-    }
+    };
     
     map = new google.maps.Map(document.getElementById("midpoint-canvas"), myOptions);
     polyline = new google.maps.Polyline({
@@ -37,9 +28,6 @@ function initMid() {
     //directionsDisplay.setMap(map);
     return findMiddle(address1, address2);
 }
-
-
-
 
 
 function findMiddle(start, end) {
@@ -121,37 +109,38 @@ google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
     var p1= this.getPath().getAt(i-2);
     var p2= this.getPath().getAt(i-1);
     var m = (metres-olddist)/(dist-olddist);
-    var a = new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
+    a = new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
+
     //console logging from here works
+    var getEvents= $.ajax({
+    url: "http://api.eventful.com/json/events/search?&app_key=cWNxSHrggxxJH23h&where="+a.lat()+","+a.lng()+"&within=1&date=Today",
+    dataType: 'jsonp',
+    success: function(results){
+            for (i=0; i < results["events"]["event"].length; i++){
+                events.unshift(new EventModel(results["events"]["event"][""+i+""]));
+            }
+        }
+    });
     return a
 }
-
-
-
-
-
 
 var directionsDisplay1 = new google.maps.DirectionsRenderer();
 var directionsDisplay2 = new google.maps.DirectionsRenderer();
 var directionsService = new google.maps.DirectionsService();
-var map1;
-var map2;
+var map;
 
 function initMaps(midpoint) {
-    var ny = new google.maps.LatLng(40.7903, -73.9597);
     var mapOptions = {
         zoom:7,
-        center: ny,
+        center: midpoint,
     };
-    map1 = new google.maps.Map(document.getElementById("map-canvas1"), mapOptions);
-    map2 = new google.maps.Map(document.getElementById("map-canvas2"), mapOptions);
-    directionsDisplay1.setMap(map1);
-    directionsDisplay1.setPanel(document.getElementById('directions-panel1'));
-    directionsDisplay2.setMap(map2);
-    directionsDisplay2.setPanel(document.getElementById('directions-panel2'));
+    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+    directionsDisplay1.setMap(map);
+    directionsDisplay1.setPanel(document.getElementById('route1'));
+    directionsDisplay2.setMap(map);
+    directionsDisplay2.setPanel(document.getElementById('route2'));
     calcRoute(address1, midpoint, directionsDisplay1);
     calcRoute(address2, midpoint, directionsDisplay2);
-    console.log("done!");
 }
 
 
@@ -164,7 +153,10 @@ function calcRoute(start, end, directionsDisplay) {
     };
     directionsService.route(request, function(result, status) {
                             if (status == google.maps.DirectionsStatus.OK) {
-                                directionsDisplay.setDirections(result);
+                                if (directionsDisplay) {
+                                    directionsDisplay.setDirections(result);
+                                }
+                                
                             }
     });
 }
