@@ -23,7 +23,7 @@ var namesList = [];
 var mLat;
 var mLong;
 var rSize; <!--will allow the user to pick the radius of the location -->
-var placeType = []; <!--will allow the user to pick different places: ie restaurant, stores, etc -->
+var placeType; <!--will allow the user to pick different places: ie restaurant, stores, etc -->
 
 function initialize(mLat, mLong, rSize, placeType) {
 mLat = 40.7183;
@@ -35,14 +35,16 @@ var loc = new google.maps.LatLng(mLat, mLong);
     zoom: 15
   });
 -->
-rSize = 500;
-placeType.push("restaurant");
+rSize = 600;
+placeType="";
+placeType.concat("restaurant");
+placeType.concat("|book_store");
   var request = {
     location: loc,
     radius: rSize,
     types: placeType
   };
-
+console.log(placeType);
   infowindow = new google.maps.InfoWindow();
   var service = new google.maps.places.PlacesService(map);
   service.nearbySearch(request, callback);
@@ -52,13 +54,13 @@ function callback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 0; i < results.length; i++) {
       
-			namesList.push(results[i]["name"]);
-			createMarker(results[i]);
+      namesList.push(results[i]["name"]);
+      createMarker(results[i]);
    }
     for (var i = 0; i <results.length; i++) {
       console.log(namesList[i]);
     }
-		}
+    }
 }
 
 

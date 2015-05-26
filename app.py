@@ -15,11 +15,15 @@ def index():
         return render_template("main.html")
 
 
+#Testing for two-panel midpoint directions
+@app.route("/directions", methods=["GET"])
+def directions():
+    return render_template("directions.html")
 
+@app.route("/results/<addresses>", methods=["GET","POST"])
+def results(addresses):
+    return render_template("results.html", addresses=addresses)
 
-@app.route("/directions/<addresses>", methods=["GET","POST"])
-def directions(addresses):
-    return render_template("directions.html", addresses=addresses)
 
 ##This route is just for transit maps testing
 @app.route("/transit", methods=["GET"])
@@ -28,11 +32,7 @@ def transit():
 
 @app.route("/test", methods=["GET","POST"])
 def test():
-        return render_template("places.html")
-
-@app.route("/suggestions/<mspot>", methods=["GET","POST"])
-def suggestions(mspot):
-        return render_template("suggestions.html")
+        return render_template("eventResults.html")
 
 
 if __name__=="__main__":
