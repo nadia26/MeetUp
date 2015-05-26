@@ -15,9 +15,17 @@ def index():
         return render_template("main.html")
 
 
+
+
+
 @app.route("/directions/<addresses>", methods=["GET", "POST"])
 def directions(addresses):
     return render_template("directions.html", addresses=addresses)
+
+
+@app.route("/test/<addresses>", methods=["GET", "POST"])
+def test(addresses):
+    return render_template("test2.html", addresses=addresses)
 
 
 if __name__=="__main__":

@@ -16,7 +16,6 @@
 
 
 <script>
-    console.log("hello");
     var addresses = {{ addresses|tojson|safe }}
 
 var a;
@@ -25,10 +24,16 @@ var calcRoute;
 var eventsArray = [];
 var events;
 var initialized;
+
+
 </script>
+
+
 
 {% endblock %}
 {% block body %}
+
+
 <script type="text/template" id="restaurant-template">
 <div class="panel panel-default">
 <div class="panel-heading">
@@ -171,4 +176,5 @@ var initialized;
 <script src="../static/js/directions.js"></script>
 <script src="../static/js/places.js"></script>
 <script src="../static/js/events.js"></script>
+
 {% endblock %}

@@ -1,4 +1,7 @@
-console.log("directions.js");
+
+
+
+//console.log("directions.js");
 //console.log(addresses);
 
 
@@ -20,6 +23,9 @@ var midpoint;
 //var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
 var polyline = null;
+ 
+ 
+ 
 
 function initialize() {
     initMid();
@@ -87,7 +93,7 @@ function findMiddle(start, end) {
                             initMaps(midpoint);
                             } else {
                             //not entirely sure what this is for/what it does
-                            alert("directions response "+status);
+                            alert("No directions could be found.");
                             }
                             });
 }
