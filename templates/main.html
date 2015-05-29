@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 {% block head %}
 
+
+<!--
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+-->
+
+
 <script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUNHf_NW-4AgJFFRI1KKK06U7FNz2JZYw">
 </script>
+
 <script>
   $(document).ready(function() {
   $('#modal').modal({
@@ -26,7 +33,7 @@
           <div class="form-group row">
             <label for="address1" class="col-sm-2 control-label">Address 1</label>
       	    <div class="col-sm-8">
-      		    <input type="text" class="form-control" placeholder="Your address..." id="address1" name="address1">
+      		    <input id="input1" type="text" class="form-control" placeholder="Your address..." id="address1" name="address1">
       	    </div>
             <input type="hidden" id="longitude">
             <input type="hidden" id="latitude">
@@ -41,7 +48,7 @@
           <div class="form-group row">
             <label for="address2" class="col-sm-2 control-label">Address 2</label>
       	    <div class="col-sm-8">
-      	      <input type="text" class="form-control" placeholder="...Your friend's address!" name="address2">
+      	      <input id="input2" type="text" class="form-control" placeholder="...Your friend's address!" name="address2">
       	    </div>
 	        </div>
           <!-- Dropdown for categories

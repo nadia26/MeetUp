@@ -17,6 +17,8 @@ var getCurrentLocation = function(){
 }
 
 //b1.addEventListener('click',getCurrentLocation);
+
+
 function initialize() {
     var mapOptions = {
 	center: { lat:40.7881,  lng: -73.95,},
@@ -24,6 +26,12 @@ function initialize() {
     };
     var map = new google.maps.Map(document.getElementById('map-canvas'),
 				  mapOptions);
+    
+    var input = document.getElementById('input1');
+
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+    
     
 }
 google.maps.event.addDomListener(window, 'load', initialize);
