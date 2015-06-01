@@ -2,18 +2,18 @@
 var locateButtons = document.getElementsByName("locate");
 var b1 = locateButtons[0];
 var setCurrentLocation = function(position) {
-	var longitude = document.getElementById("longitude");
-	var latitude = document.getElementById("latitude");
-	longitude.innerHTML = position.coords.longitude;
-	latitude.innerHTML = position.coords.latitude;
-	var a1 = document.getElementById("address1");
-	a1.disabled = true
-	a1.placeholder = "Using your current coordinates...";
+    var longitude = document.getElementById("longitude");
+    var latitude = document.getElementById("latitude");
+    longitude.innerHTML = position.coords.longitude;
+    latitude.innerHTML = position.coords.latitude;
+    var a1 = document.getElementById("address1");
+    a1.disabled = true
+    a1.placeholder = "Using your current coordinates...";
 }
 var getCurrentLocation = function(){
-	if( navigator.geolocation ) {
-		navigator.geolocation.getCurrentPosition(setCurrentLocation);
-	}
+    if( navigator.geolocation ) {
+	navigator.geolocation.getCurrentPosition(setCurrentLocation);
+    }
 }
 
 //b1.addEventListener('click',getCurrentLocation);
@@ -29,9 +29,9 @@ function initialize() {
     
     var input = document.getElementById('input1');
 
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.bindTo('bounds', map);
-    
     
 }
+
+
 google.maps.event.addDomListener(window, 'load', initialize);
+    

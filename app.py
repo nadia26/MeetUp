@@ -16,6 +16,9 @@ def index():
 
 
 
+@app.route("/auto", methods=["GET", "POST"])
+def auto():
+    return render_template("autotest.html")
 
 
 @app.route("/directions/<addresses>", methods=["GET", "POST"])
