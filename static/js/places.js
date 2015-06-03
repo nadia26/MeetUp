@@ -1,10 +1,11 @@
 var App = new Marionette.Application();
-var rcompview, bcompview;
+var rcompview, bcompview, ecompview;
 var markers;
 App.addRegions({
   restregion: "#restaurant-region",
   bakeregion: "#bakery-region",
-  eventregion: "#event-region"
+  eventregion: "#event-region",
+  dateregion: "#date-region"
 });
 
 var RestaurantCollection = Backbone.Collection.extend({
@@ -21,6 +22,7 @@ App.RestaurantView = Marionette.ItemView.extend({
   tagName: "panel panel-default",
   events: {
     "click .panel-title": function() {
+      this.model.attributes.marker.setMap(map);
       infowindow.setContent(this.model.attributes.name);
       infowindow.open(map,this.model.attributes.marker);
     }
@@ -76,7 +78,6 @@ function callback(results, status) {
         p = p - 1;
       };
 	results[i]["marker"] = createMarker(results[i].geometry.location, results[i].name);
-	results[i]["marker"].setMap(null);
       if (results[0]["types"].indexOf("bakery") > -1) {
         results[i]["type"] = "bakery";
         bakeries.unshift(new RestaurantModel(results[i]));
@@ -93,7 +94,7 @@ function callback(results, status) {
 function createMarker(location, name, map) {
   var marker = new google.maps.Marker({
     map: map,
-    position: location,
+    position: location
   });
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.setContent(name);
@@ -103,13 +104,8 @@ function createMarker(location, name, map) {
 }
 
 
-$("#display-restaurants").on("shown.bs.collapse", function() {
-    manipulateMarkers(restaurants, map);
-    alert("here");
-});
 
 function manipulateMarkers(collection, map) {
-    console.log("hello");
     for (var i = 0; i < collection.models.length; i++) {
 	collection.at(i).attributes.marker.setMap(map);
     }
@@ -125,6 +121,7 @@ function chooseRestaurant(place_name) {
         restaurants.at(i).attributes.marker.setMap(null);
       };
     }
+    date.set({restaurant: r.attributes});
     restaurants.reset(r);
   }
   else {
@@ -135,15 +132,28 @@ function chooseRestaurant(place_name) {
       }
 
     }
+    date.set({bakery: b.attributes});
     bakeries.reset(b);
   }
 }
 
 function initializeEverything() {
+    eventInitialize();
+    ecompview = new App.EventsCompositeView({collection:events});
+    App.eventregion.show(ecompview);
     restaurantInitialize("bakery", a);
     bcompview = new App.RestaurantsCompositeView({collection:bakeries});
     App.bakeregion.show(bcompview);
     restaurantInitialize("restaurant", a);
     rcompview = new App.RestaurantsCompositeView({collection:restaurants});
     App.restregion.show(rcompview); 
+    $("#restaurant-group").on('hide.bs.collapse', function(){
+        manipulateMarkers(restaurants,null);
+      });  
+    $("#bakery-group").on('hide.bs.collapse', function(){
+        manipulateMarkers(bakeries,null);
+      });  
+    $("#event-group").on('hide.bs.collapse', function(){
+        manipulateMarkers(events,null);
+      });  
 }

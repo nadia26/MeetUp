@@ -13,8 +13,6 @@
     }
 </style>
 
-
-
 <script>
 var addresses = {{ addresses|tojson|safe }}
 
@@ -24,8 +22,8 @@ var calcRoute;
 var eventsArray = [];
 var events;
 var initialized;
-
-
+var eventInitialize;
+var date;
 </script>
 
 
@@ -33,9 +31,19 @@ var initialized;
 {% endblock %}
 {% block body %}
 
-
+<script type="text/template" id="date-template">
+    <div class="panel panel-info">
+      <div class="panel-heading">Your meetUp</div>
+      <ul class="list-group">
+        <li class="list-group-item">Restaurant: <%= restaurant.name%></li>
+        <li class="list-group-item">Bakery: <%= bakery.name%></li>
+        <li class="list-group-item">Event: <%= event.title%></li>
+      </ul>
+    </div>
+</script>
 <script type="text/template" id="restaurant-template">
-<div class="panel panel-default">
+<div class="panel-group" id="not-list-group">
+<div class="panel panel-default" id="restaurant">
 <div class="panel-heading">
 <h4 class="panel-title">
     <a data-toggle="collapse" id="#heading" data-parent="#accordion" href="#<%= place_id%>" aria-expanded="true" aria-controls="collapseOne">
@@ -53,23 +61,26 @@ var initialized;
 </div>
 </div>
 </div>
+</div>
 </script>
+
+
 
 <script type="text/template" id="event-template">
 <div class="panel panel-default">
 <div class="panel-heading">
 <h4 class="panel-title">
-    <a data-toggle="collapse" id="#heading" data-parent="#accordion" href="#<%= id%>" aria-expanded="true">
+    <a data-toggle="collapse" id="#heading" data-parent="#accordion" href="#<%= b_id%>" aria-expanded="true">
       <%- title%>
     </a>
 </h4>
 </div>
-<div id="<%= id%>" class="panel-collapse collapse" role="tabpanel">
+<div id="<%= b_id%>" class="panel-collapse collapse" role="tabpanel">
 <div class="panel-body">
 <p>Start Time: <%= start_time%></p>
 <p>Stop Time: <%= stop_time%></p>
 <p><%= description%></p>
-<!--<button class="btn btn-default" value="<%= title%>" name="chooseEvent"><span class="glyphicon glyphicon-map-marker"></span></button>-->
+<button class="btn btn-default" value="<%= b_id%>" onclick="chooseEvent(this.value)" name="chooseEvent"><span class="glyphicon glyphicon-map-marker"></span></button>
 </div>
 </div>
 </div>
@@ -105,6 +116,7 @@ var initialized;
 		<li role="presentation" class="active"><a href="#map" role="tab" data-toggle="tab">Map</a></li>
 		<li role="presentation"><a href="#route1" role="tab" data-toggle="tab">Your house to Midpoint</a></li>
 		<li role="presentation"><a href="#route2" role="tab" data-toggle="tab">Your friend's house to Midpoint</a></li>
+        <li role="presentation"><a href="#date" role="tab" data-toggle="tab">Your meetUp so far</a>
 		
 	      </ul>
 	      <div class="tab-content">
@@ -113,42 +125,50 @@ var initialized;
 		</div>
 		<div role="tabpanel" class="tab-pane" id="route1"></div>
 		<div role="tabpanel" class="tab-pane" id="route2"></div>
+        <div role="tabpanel" class="tab-pane" id="date">
+            <div id="date-region"></div>
+            
+        </div>
 		</div>
 	      </div>
 	 </div>	 
          <div class="col-md-4">
             <div class="row">
-                <div class="panel-group" id="list-group" role="tablist" aria-multiselectable="true">
+                <div class="panel-group" id="restaurant-group" role="tablist" aria-multiselectable="true">
 
-                <div class="panel panel-info">
-                    <div class="panel-heading" id="heading" role="tab">
-                        <div class="panel-title">
-                            <a id="display-restaurants" data-parent="#list-group" data-toggle="collapse" href="#rbody" aria-expanded="true" aria-controls="rbody">
-                            Nearby Restaurants</a>
+                    <div class="panel panel-info">
+                        <div class="panel-heading" id="heading" role="tab">
+                            <div class="panel-title">
+                                <a id="display-restaurants" data-parent="#list-group" data-toggle="collapse" href="#rbody" aria-expanded="true" aria-controls="rbody">
+                                Nearby Restaurants</a>
+                            </div>
                         </div>
-                    </div>
-                    <div id="rbody" class="panel-collapse collapse" role="tabpanel">
-                        <div class="panel-body">
-                        <div id="restaurant-region"></div>
+                        <div id="rbody" class="panel-collapse collapse" role="tabpanel">
+                            <div class="panel-body">
+                            <div id="restaurant-region"></div>
+                            </div>
+                <!-- This is where the collection of restaurant items should display-->
                         </div>
-            <!-- This is where the collection of restaurant items should display-->
                     </div>
                 </div>
 
-                <div class="panel panel-info" id="bakeries-panel">
-                    <div class="panel-heading"role="tab">
-                        <div class="panel-title">
-                            <a id="display-bakeries" data-parent="#list-group" data-toggle="collapse" href="#bbody" aria-expanded="true" aria-controls="bbody">
-                            Nearby Bakeries </a>
+                <div class="panel-group" id="bakery-group" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-info" id="bakeries-panel">
+                        <div class="panel-heading"role="tab">
+                            <div class="panel-title">
+                                <a id="display-bakeries" data-parent="#list-group" data-toggle="collapse" href="#bbody" aria-expanded="true" aria-controls="bbody">
+                                Nearby Bakeries </a>
+                            </div>
                         </div>
-                    </div>
-                    <div id="bbody" class="panel-collapse collapse" role="tabpanel">
-                        <div class="panel-body">
-                            <div id="bakery-region"></div>
+                        <div id="bbody" class="panel-collapse collapse" role="tabpanel">
+                            <div class="panel-body">
+                                <div id="bakery-region"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
+                <div class="panel-group" id="event-group" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-info" id="events-panel">
                     <div class="panel-heading"role="tab">
                         <div class="panel-title">
@@ -164,11 +184,13 @@ var initialized;
                 </div> 
             </div>
         </div>
+        <button type="submit" class="btn btn-primary btn-lg" id="createDate"name="createDate" disabled>Create meetUp</button>
      </div>
     
 <div id="midpoint-canvas" style="float:left;width:70%; height:100%"></div>
 <script src="../static/js/directions.js"></script>
 <script src="../static/js/places.js"></script>
 <script src="../static/js/events.js"></script>
+<script src="../static/js/dates.js"></script>
 
 {% endblock %}
