@@ -1,3 +1,6 @@
+console.log("autotest.js");
+
+
 function initialize() {
   var mapOptions = {
     center: new google.maps.LatLng(-33.8688, 151.2195),
@@ -18,23 +21,34 @@ function initialize() {
     anchorPoint: new google.maps.Point(0, -29)
   });
 
-  google.maps.event.addListener(autocomplete, 'place_changed', function() {
-    infowindow.close();
-    marker.setVisible(false);
-    var place = autocomplete.getPlace();
-    if (!place.geometry) {
-      window.alert("Autocomplete's returned place contains no geometry");
-      return;
-    }
 
-    // If the place has a geometry, then present it on a map.
-    if (place.geometry.viewport) {
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      console.log('place changing');
+      infowindow.close();
+      marker.setVisible(false);
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+	  window.alert("Autocomplete's returned place contains no geometry");
+	  return;
+      }
+
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+	  console.log("there's a place");
+	  place = place['address_components'];
+	  place = place[0];
+	  place = place['long_name'];
+	  console.log(place);
+      }
+  })}
+
+/*
       map.fitBounds(place.geometry.viewport);
     } else {
       map.setCenter(place.geometry.location);
       map.setZoom(17);  // Why 17? Because it looks good.
     }
-    marker.setIcon(/** @type {google.maps.Icon} */({
+    marker.setIcon(({
       url: place.icon,
       size: new google.maps.Size(71, 71),
       origin: new google.maps.Point(0, 0),
@@ -55,7 +69,9 @@ function initialize() {
 
     infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
     infowindow.open(map, marker);
+
   });
+*/
 
   // Sets a listener on a radio button to change the filter type on Places
   // Autocomplete.
@@ -65,6 +81,5 @@ function initialize() {
       autocomplete.setTypes(types);
     });
   }
-}
 
 google.maps.event.addDomListener(window, 'load', initialize);
