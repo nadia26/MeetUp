@@ -14,10 +14,6 @@ def index():
     else:
         return render_template("main.html")
 
-
-
-
-
 @app.route("/directions/<addresses>", methods=["GET", "POST"])
 def directions(addresses):
     return render_template("directions.html", addresses=addresses)

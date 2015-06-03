@@ -1,12 +1,3 @@
-//from the list we should take:
-//latitude
-//longitude
-//description
-//start_time
-//stop_time
-//title
-//description
-//venue_name 
 
 var EventsCollection = Backbone.Collection.extend({
   model: EventModel

@@ -16,7 +16,7 @@
 
 
 <script>
-    var addresses = {{ addresses|tojson|safe }}
+var addresses = {{ addresses|tojson|safe }}
 
 var a;
 var map;
@@ -100,14 +100,23 @@ var initialized;
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <div class="panel panel-info">
-                <div class="panel-heading">Directions</div>
-                <div class="panel-body">
-                    <div id="map-canvas" style="width:100%;height:70%"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
+	    <div class="panel" role="tabpanel">
+	      <ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#map" role="tab" data-toggle="tab">Map</a></li>
+		<li role="presentation"><a href="#route1" role="tab" data-toggle="tab">Your house to Midpoint</a></li>
+		<li role="presentation"><a href="#route2" role="tab" data-toggle="tab">Your friend's house to Midpoint</a></li>
+		
+	      </ul>
+	      <div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="map">
+                  <div id="map-canvas" style="width:100%;height:70%"></div>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="route1"></div>
+		<div role="tabpanel" class="tab-pane" id="route2"></div>
+		</div>
+	      </div>
+	 </div>	 
+         <div class="col-md-4">
             <div class="row">
                 <div class="panel-group" id="list-group" role="tablist" aria-multiselectable="true">
 
@@ -126,7 +135,7 @@ var initialized;
                     </div>
                 </div>
 
-                <div class="panel panel-info" id="bakeries-panel" style="visibility:hidden;">
+                <div class="panel panel-info" id="bakeries-panel">
                     <div class="panel-heading"role="tab">
                         <div class="panel-title">
                             <a id="display-bakeries" data-parent="#list-group" data-toggle="collapse" href="#bbody" aria-expanded="true" aria-controls="bbody">
@@ -140,7 +149,7 @@ var initialized;
                     </div>
                 </div>
                 
-                <div class="panel panel-info" id="events-panel" style="visibility:hidden;">
+                <div class="panel panel-info" id="events-panel">
                     <div class="panel-heading"role="tab">
                         <div class="panel-title">
                             <a id="display-events" data-parent="#list-group" data-toggle="collapse" href="#ebody" aria-expanded="true" aria-controls="ebody">
@@ -156,21 +165,6 @@ var initialized;
             </div>
         </div>
      </div>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="panel" role="tabpanel">
-                <ul class="nav nav-tabs" role="tablist" id="myTab">
-                    <li role="presentation"><a aria-controls="route1" href="#route1" role="tab" data-toggle="tab">Your House to Midpoint</a></li>
-                    <li role="presentation"><a href="#route2" role="tab" data-toggle="tab">Your Friend's House to Midpoint</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane" id="route1"></div>
-                    <div role="tabpanel" class="tab-pane" id="route2"></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
     
 <div id="midpoint-canvas" style="float:left;width:70%; height:100%"></div>
 <script src="../static/js/directions.js"></script>
