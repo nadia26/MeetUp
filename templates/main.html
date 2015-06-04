@@ -20,6 +20,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title">MeetUp</h2>
+
       </div>
       <form class="form-horizontal" method="POST">
 	<div class="modal-body">
@@ -55,15 +56,59 @@
            -->
 	  <div class="form-group">
 	    <div class="col-sm-10">
-	      <button type="submit" name="b" value="submit"class="btn btn-default">Search</button>
+	      <button type="submit" name="b" value="search"class="btn btn-default">Search</button>
 	    </div>
 	  </div>
 	</div>
       </form>
+      <div class="modal-footer">
+        {% if user %}
+        Logged on as {{ user }}
+        {% else %}
+        <div class="col-sm-3">
+          <button class="btn btn-primary" href="/register">Create meetUp Account</button>
+        </div>
+        <div class="col-sm-3">
+          <button class="btn btn-info" data-toggle="modal" data-target="#loginModal">Log On</button>
+        </div>
+        {% endif %}
+      </div>
+
     </div>
   </div>
 </div>
 </div>
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Log in to your meetUp account</h2>
+      </div>
+      <div class="modal-body">
+        <form method="POST" class="form-horizontal">
+          <div class="form-group">
+            <label for="username" class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="password" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-6">
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+              </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" name="b" value="login" class="btn btn-default">Log In</button>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="map-canvas"></div>
 
 <script src="../static/js/main.js"></script>
