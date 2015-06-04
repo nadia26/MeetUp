@@ -15,7 +15,7 @@
 
 <script>
 var addresses = {{ addresses|tojson|safe }}
-
+console.log(addresses);
 var a;
 var map;
 var calcRoute;
@@ -188,7 +188,7 @@ var date;
             </div>
         </div>
         {% if user %}
-        <button type="submit" class="btn btn-primary btn-lg" id="createDate"name="createDate" disabled>Create meetUp</button>
+        <button class="btn btn-primary btn-lg" onclick="saveNewDate()"  id="createDate"name="createDate" disabled>Create meetUp</button>
         {% endif %}
      </div>
     

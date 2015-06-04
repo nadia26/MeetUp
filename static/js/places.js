@@ -137,6 +137,7 @@ function chooseRestaurant(place_name) {
   }
 }
 
+
 function initializeEverything() {
     eventInitialize();
     ecompview = new App.EventsCompositeView({collection:events});

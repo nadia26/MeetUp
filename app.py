@@ -1,10 +1,11 @@
 from flask import Flask,request,url_for,redirect,render_template, session
 from pymongo import MongoClient
 from functools import wraps
-from mongo_utils import register, authenticate
+import json
+from mongo_utils import register, authenticate, add_date
 
 app=Flask(__name__)
-
+addresses = {}
 @app.route("/register", methods=["GET","POST"])
 def signup():
     if request.method == "POST":
@@ -15,6 +16,14 @@ def signup():
         session['user'] = username
         return redirect(url_for('index'))
     return render_template("register.html")
+
+@app.route("/date",methods=['GET','POST','DELETE','PUT'])
+def date():
+    method = request.method
+    json = request.get_json()
+    if method == "POST":
+        add_date(json, session['user'])
+        return redirect(url_for("index"))
 
 @app.route("/", methods=["GET","POST"])
 def index():
@@ -35,6 +44,8 @@ def index():
 
 @app.route("/directions/<addresses>", methods=["GET", "POST"])
 def directions(addresses):
+    # if request.method == "POST":
+
     return render_template("directions.html", addresses=addresses, user=session['user'])
 
 if __name__=="__main__":
