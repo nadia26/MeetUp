@@ -25,16 +25,17 @@ def index():
                 'address2':request.form['address2']
             }
             return redirect(url_for('directions', addresses=addresses))
+        elif request.form["b"] == "logout":
+            session["user"] = ""
         elif request.form["b"] == "login":
             if authenticate(request.form["username"], request.form["password"]):
                 session["user"] = request.form["username"]
             return redirect(url_for("index"))
-    else:
-        return render_template("main.html",user=session['user'])
+    return render_template("main.html",user=session['user'])
 
 @app.route("/directions/<addresses>", methods=["GET", "POST"])
 def directions(addresses):
-    return render_template("directions.html", addresses=addresses)
+    return render_template("directions.html", addresses=addresses, user=session['user'])
 
 if __name__=="__main__":
     app.debug=True

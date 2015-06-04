@@ -105,6 +105,9 @@ var date;
             <a class="navbar-brand" href="/">
                 meetUp
             </a>
+            {% if user %}
+                <p class="navbar-text navbar-right">Signed in as {{ user }}</p>
+            {% endif %}
         </div>
     </div>
 </nav>
@@ -184,7 +187,9 @@ var date;
                 </div> 
             </div>
         </div>
+        {% if user %}
         <button type="submit" class="btn btn-primary btn-lg" id="createDate"name="createDate" disabled>Create meetUp</button>
+        {% endif %}
      </div>
     
 <div id="midpoint-canvas" style="float:left;width:70%; height:100%"></div>

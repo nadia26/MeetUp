@@ -63,10 +63,17 @@
       </form>
       <div class="modal-footer">
         {% if user %}
-        Logged on as {{ user }}
+        <div class="col-md-4">
+          Logged on as {{ user }}
+        </div>
+        <div class="col-md-2">
+          <form method="POST">
+          <button class="btn btn-primary" type="submit" name="b" value="logout">Log Out</button>
+        </form>
+        </div>
         {% else %}
         <div class="col-sm-3">
-          <button class="btn btn-primary" href="/register">Create meetUp Account</button>
+          <a href="/register"><button class="btn btn-primary">Create meetUp Account</button></a>
         </div>
         <div class="col-sm-3">
           <button class="btn btn-info" data-toggle="modal" data-target="#loginModal">Log On</button>

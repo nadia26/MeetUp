@@ -23,5 +23,9 @@ App.dateregion.show(dateview);
 dateview.listenTo(date, 'change', function() {
 	console.log(this);
 	dateview.render();
-	document.getElementById("createDate").disabled=false;
+
+	var button = document.getElementById("createDate")
+    if(button){
+        button.disabled=false;
+    };
 });
