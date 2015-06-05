@@ -5,19 +5,15 @@ app2=Flask(__name__)
 @app2.route("/", methods=["GET","POST"])
 def index():
     if request.method == "POST":
-        print request.form
-        '''
-        addresses = {
-            'address1':request.form['address1'],
-            'address2':request.form['address2']
-        }
-        '''
-        return redirect(url_for('directions'))
+        print "abcdefghijklmnop \n\n\n"
+        return render_template("autotest.html")
     else:
+        print "asdklga;sdklfjf \n\n\n"
         return render_template("autotest.html")
 
 @app2.route("/directions/", methods=["GET", "POST"])
 def directions(addresses):
+    
     return render_template("directions.html")
 
 
