@@ -18,9 +18,23 @@
   "backdrop":"static"
   });
   });
-</script>   
+</script>
+
+
+
+<style>
+    .pac-container{
+        z-index: 1070 !important;
+    }
+
+    .modal{
+        z-index: 1050;
+    }
+</style>
+
 {% endblock %}
 {% block body %}
+
 <div class="container">
 <div class="modal fade" id="modal" role="dialog">
   <div class="modal-dialog">
@@ -80,4 +94,6 @@
 <div id="map-canvas"></div>
 
 <script src="../static/js/main.js"></script>
+
+
 {% endblock %}
