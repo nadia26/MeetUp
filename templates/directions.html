@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
     
-    <script src="../static/lib/underscore.js"></script>
-    <script src="../static/lib/backbone.js"></script>
-    <script src="../static/lib/backbone.marionette.js"></script>
-    <script src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=places&signed_in=true&key=AIzaSyCUNHf_NW-4AgJFFRI1KKK06U7FNz2JZYw"></script>
-    
+<script src="http://maps.google.com/maps/api/js?sensor=false&v=3.exp&libraries=places&signed_in=true&key=AIzaSyCUNHf_NW-4AgJFFRI1KKK06U7FNz2JZYw"></script>    
     
 <style type="text/css">
     div#midpoint-canvas {
@@ -22,7 +18,7 @@ var calcRoute;
 var eventsArray = [];
 var events;
 var initialized;
-var eventInitialize;
+var eventInitialize, setUpNewDate;
 var date;
 </script>
 
@@ -41,6 +37,7 @@ var date;
       </ul>
     </div>
 </script>
+
 <script type="text/template" id="restaurant-template">
 <div class="panel-group" id="not-list-group">
 <div class="panel panel-default" id="restaurant">

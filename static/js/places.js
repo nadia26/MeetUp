@@ -157,4 +157,5 @@ function initializeEverything() {
     $("#event-group").on('hide.bs.collapse', function(){
         manipulateMarkers(events,null);
       });  
+    setUpNewDate();
 }

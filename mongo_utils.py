@@ -17,3 +17,7 @@ def add_date(date, uname):
 	if dates:
 		return True
 	return False
+
+def get_dates(uname):
+	dates = db.accounts.find_one({'username':uname})['dates']
+	return dates

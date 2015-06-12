@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block head %}
+
+<script>
+var meetups = {{ dates|tojson|safe }};
+var App = new Marionette.Application();
+var DatesCompositeView;
+</script>
+
+{% endblock %}
+{% block body %}
+<script type="text/template" id="date-template">
+    <div class="panel panel-info">
+      <div class="panel-heading"><%= addresses.address1%> to <%= addresses.address2%></div>
+      <ul class="list-group">
+        <li class="list-group-item">Restaurant: <%= restaurant.name%></li>
+        <li class="list-group-item">Bakery: <%= bakery.name%></li>
+        <li class="list-group-item">Event: <%= event.title%></li>
+      </ul>
+    </div>
+</script>
+s
+<script type="text/template" id="meetups-template">
+<div class="panel panel-info" id="accordion" style="overflow: scroll;height: 70%;" aria-multiselectable="true">
+<div class="panel-body">
+<ul id="meetup-list">
+
+</ul>
+</div> 
+</div>
+</script>
+
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                meetUp
+            </a>
+            {% if user %}
+                <p class="navbar-text navbar-right">Signed in as {{ user }}</p>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+<div class="container">
+	<div id="meetups-region"></div>
+</div>
+<script src="../static/js/dates.js"></script>
+<script src="../static/js/meetups.js"></script>
+{% endblock %}
