@@ -5,7 +5,7 @@ app=Flask(__name__)
 @app.route("/", methods=["GET","POST"])
 def index():
     if request.method == "POST":
-        print request.form
+        #print request.form
         addresses = {
             'address1':request.form['address1'],
             'address2':request.form['address2']
@@ -16,6 +16,9 @@ def index():
 
 
 
+@app.route("/auto", methods=["GET", "POST"])
+def auto():
+    return render_template("autotest.html")
 
 
 @app.route("/directions/<addresses>", methods=["GET", "POST"])
