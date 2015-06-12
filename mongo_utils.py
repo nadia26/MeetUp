@@ -15,6 +15,7 @@ def add_date(date, uname):
 	dates = db.accounts.find_one_and_update({"username":uname},{'$addToSet':{'dates':date}})
 	print dates
 	if dates:
+                print "succesfully added date"
 		return True
 	return False
 

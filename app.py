@@ -23,7 +23,8 @@ def date():
     json = request.get_json()
     if method == "POST":
         add_date(json, session['user'])
-        return redirect(url_for("index"))
+    print "back in app"
+    return redirect(url_for("meetups"))
 
 @app.route("/", methods=["GET","POST"])
 def index():
@@ -35,7 +36,7 @@ def index():
             }
             return redirect(url_for('directions', addresses=addresses))
         elif request.form["b"] == "logout":
-            session.pop('user', none)
+            session.pop('user', None)
         elif request.form["b"] == "login":
             if authenticate(request.form["username"], request.form["password"]):
                 session["user"] = request.form["username"]

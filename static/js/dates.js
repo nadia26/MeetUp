@@ -13,17 +13,19 @@ var DateModel = Backbone.Model.extend({
 var DatesCollection = Backbone.Collection.extend({
     model: DateModel
 });
-
-App.DateCompositeView = Marionette.CompositeView.extend({
-    childView: App.DateView,
-    childViewContainer: "#meetup-list",
+App.DateListView = Marionette.ItemView.extend({
+    template: "#date-template"
+});
+App.DateCollectionView = Marionette.CollectionView.extend({
+    childView: App.DateListView,
     template: "#meetups-template"
 
 });
 
 App.DateView = Marionette.ItemView.extend({
-   template: "#date-template"
+    template: "#date-template"
 });
+
 
 setUpNewDate = function() {
     date = new DateModel();
@@ -45,7 +47,7 @@ function saveNewDate() {
         date.attributes[key].geometry = null;
         date.attributes[key].reference = null;
         date.attributes[key].icon = null;
-        date.attibutes[addresses] = addresses;
+        date.attributes["addresses"] = addresses;
     }
     date.save(date.toJSON());
 }

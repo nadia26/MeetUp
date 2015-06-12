@@ -10,6 +10,7 @@ var DatesCompositeView;
 {% endblock %}
 {% block body %}
 <script type="text/template" id="date-template">
+  <li>
     <div class="panel panel-info">
       <div class="panel-heading"><%= addresses.address1%> to <%= addresses.address2%></div>
       <ul class="list-group">
@@ -18,16 +19,12 @@ var DatesCompositeView;
         <li class="list-group-item">Event: <%= event.title%></li>
       </ul>
     </div>
+    </li>
 </script>
-s
-<script type="text/template" id="meetups-template">
-<div class="panel panel-info" id="accordion" style="overflow: scroll;height: 70%;" aria-multiselectable="true">
-<div class="panel-body">
-<ul id="meetup-list">
 
+<script type="text/template" id="meetups-template">
+<ul id="meetup-list">
 </ul>
-</div> 
-</div>
 </script>
 
 
@@ -44,6 +41,9 @@ s
     </div>
 </nav>
 <div class="container">
+  <div class="page-header">
+  <h1>Your upcoming meetUps</h1>
+</div>
 	<div id="meetups-region"></div>
 </div>
 <script src="../static/js/dates.js"></script>

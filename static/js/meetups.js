@@ -1,19 +1,19 @@
 
-console.log(meetups);
-
+meetups = meetups[0]
 var meetupsCollection = new DatesCollection();
 function parseMeetups() {
-	for (var i = 0; i < meetups.length; i++){
-		meetupsCollection.unshift(new DateModel(meetups[i]));
+    for (var i = 0; i < meetups.length; i++){
+	console.log(meetups[i]);
+	meetupsCollection.unshift(new DateModel(meetups[i]));
 	}
 }
 
 parseMeetups()
 
-var mcompview = new App.DateCompositeView({collection: meetupsCollection});
+var mcollview = new App.DateCollectionView({collection: meetupsCollection});
 
 App.addRegions({
-	meetupsRegion: "#meetups-region"
+    meetupsRegion: "#meetups-region"
 })
 
-App.meetupsRegion.show(mcompview);
+App.meetupsRegion.show(mcollview);
