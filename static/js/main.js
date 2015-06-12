@@ -26,41 +26,39 @@ function initialize() {
     };
     var map = new google.maps.Map(document.getElementById('map-canvas'),
 				  mapOptions);
+    autocomplete1 = new google.maps.places.Autocomplete((document.getElementById('input1')),
+							{ types: ['geocode'] });
+    autocomplete2 = new google.maps.places.Autocomplete((document.getElementById('input2')),
+                                                        { types: ['geocode'] });
     
+    autocomplete1.bindTo('bounds', map);
+    autocomplete2.bindTo('bounds', map);
 
-    autocomplete = new google.maps.places.Autocomplete((document.getElementById('input1')),
-                                                       { types: ['geocode'] });
-    // When the user selects an address from the dropdown,
-    // populate the address fields in the form.
-    google.maps.event.addListener(autocomplete, 'place_changed', function() {
-                                  fillInAddress();
-                                  });
-    
-    
+
 }
 
-function fillInAddress() {
-    // Get the place details from the autocomplete object.
-    var place = autocomplete.getPlace();
-    console.log(place);
-    /*
-    for (var component in componentForm) {
-        document.getElementById(component).value = '';
-        document.getElementById(component).disabled = false;
+
+
+var input1= document.getElementById('input1');
+google.maps.event.addDomListener(input1, 'keydown', function(e) {
+    if (e.keyCode == 13 && $('.pac-container:visible').length) {
+        e.preventDefault();
     }
-    
-    // Get each component of the address from the place details
-    // and fill the corresponding field on the form.
-    for (var i = 0; i < place.address_components.length; i++) {
-        var addressType = place.address_components[i].types[0];
-        if (componentForm[addressType]) {
-            var val = place.address_components[i][componentForm[addressType]];
-            document.getElementById(addressType).value = val;
-        }
+});
+
+//(might want to get rid of this)
+//this stops enter from submitting the form on the second input
+var input2= document.getElementById('input2');
+google.maps.event.addDomListener(input2, 'keydown', function(e) {
+    if (e.keyCode == 13 && $('.pac-container:visible').length) {
+        e.preventDefault();
     }
-     */
-}
+});
+
+
+
+
 
 
 google.maps.event.addDomListener(window, 'load', initialize);
-    
+
