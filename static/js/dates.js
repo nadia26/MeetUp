@@ -16,9 +16,11 @@ var DatesCollection = Backbone.Collection.extend({
 App.DateListView = Marionette.ItemView.extend({
     template: "#date-template"
 });
+
 App.DateCollectionView = Marionette.CollectionView.extend({
     childView: App.DateListView,
-    template: "#meetups-template"
+    template: "#meetups-template",
+    childViewContainer : "ul",
 
 });
 

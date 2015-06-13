@@ -10,7 +10,6 @@ var DatesCompositeView;
 {% endblock %}
 {% block body %}
 <script type="text/template" id="date-template">
-  <li>
     <div class="panel panel-info">
       <div class="panel-heading"><%= addresses.address1%> to <%= addresses.address2%></div>
       <ul class="list-group">
@@ -19,7 +18,6 @@ var DatesCompositeView;
         <li class="list-group-item">Event: <%= event.title%></li>
       </ul>
     </div>
-    </li>
 </script>
 
 <script type="text/template" id="meetups-template">
