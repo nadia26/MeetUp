@@ -29,6 +29,7 @@ var polyline = null;
 
 function initialize() {
     initMid();
+    initializeEverything();
 }
 
 function initMid() {
