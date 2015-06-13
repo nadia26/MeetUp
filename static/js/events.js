@@ -13,6 +13,7 @@ App.EventView = Marionette.ItemView.extend({
   tagName: "panel panel-default",
   events: {
     "click .panel-title": function() {
+      this.model.attributes.marker.setMap(map);
       infowindow.setContent(this.model.attributes.title);
       infowindow.open(map,this.model.attributes.marker);
     }
@@ -27,24 +28,20 @@ App.EventsCompositeView = Marionette.CompositeView.extend({
 
 events = new EventsCollection();
 
-
-function eventInitialize() {
+function chooseEvent(modelid) {
+  var e = events.findWhere({b_id: modelid});
+  console.log(e);
+  events.reset(e);
+  date.set({event:e.attributes});
+}
+eventInitialize = function() {
    infowindow = new google.maps.InfoWindow();
    for (var i = 0; i < events.models.length; i++) {
-
 	   	var model = events.models[i].attributes;
+      events.models[i].set("b_id", events.models[i].cid);
 	   	var loc = new google.maps.LatLng(parseFloat(model.latitude), parseFloat(model.longitude));
-	   	console.log(loc)
 	   	var m = createMarker(loc, model.title);
 	   	events.models[i].set("marker", m);
+
    }
 }
-document.getElementById("display-events").addEventListener('click', function(e) {
-  if (!initialized["event"]){
-    eventInitialize();
-    console.log(events);
-    initialized["event"] = true;
-    var ecompview = new App.EventsCompositeView({collection:events});
-    App.eventregion.show(ecompview);
-  }
-});
