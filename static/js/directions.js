@@ -29,6 +29,7 @@ var polyline = null;
 
 function initialize() {
     initMid();
+    
 }
 
 function initMid() {
@@ -141,7 +142,8 @@ google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
             }
         }
     });
-    return a
+    initializeEverything();
+    return a;
 }
 
 var directionsDisplay1 = new google.maps.DirectionsRenderer();
