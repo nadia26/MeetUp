@@ -54,7 +54,8 @@ function initMid() {
 
 
 function findMiddle(start, end) {
-    var travelMode = google.maps.DirectionsTravelMode.[mode]
+    console.log(mode);
+    var travelMode = google.maps.DirectionsTravelMode[mode];
     var request = {
     origin: start,
     destination: end,
@@ -169,7 +170,7 @@ function calcRoute(start, end, directionsDisplay) {
     var request = {
     origin:start,
     destination:end,
-    travelMode: google.maps.TravelMode.[mode]
+    travelMode: google.maps.TravelMode[mode]
     };
     directionsService.route(request, function(result, status) {
                             if (status == google.maps.DirectionsStatus.OK) {

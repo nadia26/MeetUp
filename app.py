@@ -8,8 +8,9 @@ app=Flask(__name__)
 addresses = {}
 @app.route("/register", methods=["GET","POST"])
 def signup():
+    print "in register"
     if request.method == "POST":
-        ## print(request.form)
+        print "YOUR MOTHER"
         password = request.form['password']
         username = request.form['username']
         register(username, password)
@@ -23,11 +24,14 @@ def date():
     json = request.get_json()
     if method == "POST":
         add_date(json, session['user'])
-    print "back in app"
     return redirect(url_for("meetups"))
 
 @app.route("/", methods=["GET","POST"])
 def index():
+    if "user" in session:
+        user = session["user"]
+    else:
+        session["user"] = ""
     if request.method == "POST":
         if request.form["b"] == "search":
             addresses = {
@@ -37,21 +41,23 @@ def index():
             }
             return redirect(url_for('directions', addresses=addresses))
         elif request.form["b"] == "logout":
-            session.pop('user', None)
+            if 'user' in session:
+                session.pop('user', None)
+            session['user'] = ""
         elif request.form["b"] == "login":
             if authenticate(request.form["username"], request.form["password"]):
                 session["user"] = request.form["username"]
             return redirect(url_for("index"))
-    if "user" in session:
-        user= session["user"]
-    else:
-        user = ""
-    return render_template("main.html",user=user)
+    
+    return render_template("main.html",user=session["user"])
 
 @app.route("/directions/<addresses>", methods=["GET", "POST"])
 def directions(addresses):
-    #return render_template("directions.html", addresses=addresses, user=session['user'])
-    return render_template("directions.html", addresses=addresses)
+    if "user" in session:
+        user = session["user"]
+    else:
+        session["user"] = ""
+    return render_template("directions.html", addresses=addresses,user=session["user"])
 
 @app.route("/meetups",methods=["GET","POST"])
 def meetups():

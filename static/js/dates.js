@@ -50,4 +50,5 @@ function saveNewDate() {
         date.attributes["addresses"] = addresses;
     }
     date.save(date.toJSON());
+    alert("You have created your new meetUp!")
 }
