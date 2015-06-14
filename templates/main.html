@@ -6,10 +6,10 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 
 <!--
-<script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUNHf_NW-4AgJFFRI1KKK06U7FNz2JZYw">
-</script>
--->
+    <script type="text/javascript"
+	    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUNHf_NW-4AgJFFRI1KKK06U7FNz2JZYw">
+    </script>
+    -->
 
 <script>
   $(document).ready(function() {
@@ -23,83 +23,99 @@
 
 
 <style>
-    .pac-container{
-        z-index: 1070 !important;
-    }
+  .pac-container{
+  z-index: 1070 !important;
+  }
 
-    .modal{
-        z-index: 1050;
-    }
+  .modal{
+  z-index: 1050;
+  }
 </style>
 
 {% endblock %}
 {% block body %}
 
 <div class="container">
-<div class="modal fade" id="modal" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title">MeetUp</h2>
-        {% if  user %}
-        Logged on as {{ user }}
-        {% endif %}
-      </div>
-      <form class="form-horizontal" method="POST">
-	<div class="modal-body">
-          <div class="form-group row">
-            <label for="address1" class="col-sm-2 control-label">Address 1</label>
-      	    <div class="col-sm-8">
-      		    <input id="input1" type="text" class="form-control" placeholder="Your address..." id="address1" name="address1">
-      	    </div>
-            <input type="hidden" id="longitude">
-            <input type="hidden" id="latitude"> 
-                
-          </div>
-          <div class="form-group row">
-            <label for="address2" class="col-sm-2 control-label">Address 2</label>
-      	    <div class="col-sm-8">
-      	      <input id="input2" type="text" class="form-control" placeholder="...Your friend's address!" name="address2">
-      	    </div>
-	        </div>
-          <!-- Dropdown for categories
-          <div class="form-group row">
-            <div class="col-sm-9">
-              <h5 class="col-sm-6">Where do you want to go?</h5>
-              <div class="btn-group">
-                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">Category <span class="caret"></span></button>
-                  <ul class="dropdown-menu">
-                    <li><input type="radio" id="restaurant" name="category" value="restaurant"><label for="restaurant">Restaurant</label></li>
-                    <li><input type="radio" id="museum" name="category" value="museum"><label for="museum">Museum</label></li>
-                    <li><input type="radio" id="store" name="category" value="store"><label for="store">Clothes and Shoes Store</label></li>
-                  </ul>
-              </div>
-            </div>
-          </div>
-           -->
-	  <div class="form-group">
-	    <div class="col-sm-10">
-	      <button type="submit" name="b" value="search"class="btn btn-default">Search</button>
-	    </div>
-	  </div>
+  <div class="modal fade" id="modal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+	<div class="modal-header">
+          <h2 class="modal-title">MeetUp</h2>
+          {% if  user %}
+          Logged on as {{ user }}
+          {% endif %}
 	</div>
-      </form>
-      <div class="modal-footer">
-        {% if user %}
-        <div class="col-md-2">
-          <form method="POST">
-          <button class="btn btn-primary" type="submit" name="b" value="logout">Log Out</button>
-        </form>
-        </div>
-        {% else %}
+	<form class="form-horizontal" method="POST">
+	  <div class="modal-body">
+            <div class="form-group row">
+              <label for="address1" class="col-sm-2 control-label">Address 1</label>
+      	      <div class="col-sm-8">
+      		<input id="input1" type="text" class="form-control" placeholder="Your address..." id="address1" name="address1">
+      	      </div>
+              <input type="hidden" id="longitude">
+              <input type="hidden" id="latitude"> 
+              
+            </div>
+            <div class="form-group row">
+              <label for="address2" class="col-sm-2 control-label">Address 2</label>
+      	      <div class="col-sm-8">
+      		<input id="input2" type="text" class="form-control" placeholder="...Your friend's address!" name="address2">
+      	      </div>
+	    </div>
+
+
+
+
+	    <div class="row">
+              <div class="btn-group col-sm-6" data-toggle="buttons">
+                <label class="btn btn-default active">
+                  <input name="mode" type="radio" value="TRANSIT" checked> Public Transportation
+                </label>
+                <label class="btn btn-default">
+                  <input name="mode" type="radio" value="DRIVING"> Driving
+                </label>
+              </div>
+
+	      <div class="col-sm-6">
+		<button type="submit" name="b" value="search"class="btn btn-default pull-right">Search</button>
+	      </div>
+	      
+	    </div>
+
+            <!-- Dropdown for categories
+		 <div class="form-group row">
+		   <div class="col-sm-9">
+		     <h5 class="col-sm-6">Where do you want to go?</h5>
+		     <div class="btn-group">
+                       <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">Category <span class="caret"></span></button>
+                       <ul class="dropdown-menu">
+			 <li><input type="radio" id="restaurant" name="category" value="restaurant"><label for="restaurant">Restaurant</label></li>
+			 <li><input type="radio" id="museum" name="category" value="museum"><label for="museum">Museum</label></li>
+			 <li><input type="radio" id="store" name="category" value="store"><label for="store">Clothes and Shoes Store</label></li>
+                       </ul>
+		     </div>
+		   </div>
+		 </div>
+		 -->
+
+	  </div>
+	</form>
+	<div class="modal-footer">
+          {% if user %}
+          <div class="col-md-2">
+            <form method="POST">
+              <button class="btn btn-primary" type="submit" name="b" value="logout">Log Out</button>
+            </form>
+          </div>
+          {% else %}
           <a href="/register"><button class="btn btn-primary">Create meetUp Account</button></a>
           <button class="btn btn-info" data-toggle="modal" data-target="#loginModal">Log On</button>
-        {% endif %}
-      </div>
+          {% endif %}
+	</div>
 
+      </div>
     </div>
   </div>
-</div>
 </div>
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -112,19 +128,19 @@
           <div class="form-group">
             <label for="username" class="col-sm-2 control-label">Username</label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" name="username" id="username" placeholder="Username">
-              </div>
+              <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+            </div>
           </div>
           <div class="form-group">
-              <label for="password" class="col-sm-2 control-label">Password</label>
+            <label for="password" class="col-sm-2 control-label">Password</label>
             <div class="col-sm-6">
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-              </div>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+            </div>
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="b" value="login" class="btn btn-default">Log In</button>
-              </div>
+              <button type="submit" name="b" value="login" class="btn btn-default">Log In</button>
+            </div>
           </div>
         </form>
       </div>
