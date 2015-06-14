@@ -31,10 +31,8 @@ App.DateView = Marionette.ItemView.extend({
 
 setUpNewDate = function() {
     date = new DateModel();
-    console.log(date);
     var dateview = new App.DateView({model:date});
     App.dateregion.show(dateview);
-
     dateview.listenTo(date, 'change', function() {
     	dateview.render();
     	var button = document.getElementById("createDate")

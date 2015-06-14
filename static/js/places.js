@@ -139,15 +139,13 @@ function chooseRestaurant(place_name) {
 
 
 initializeEverything = function() {
-    eventInitialize();
-    ecompview = new App.EventsCompositeView({collection:events});
-    App.eventregion.show(ecompview);
     restaurantInitialize("bakery", a);
     bcompview = new App.RestaurantsCompositeView({collection:bakeries});
     App.bakeregion.show(bcompview);
     restaurantInitialize("restaurant", a);
     rcompview = new App.RestaurantsCompositeView({collection:restaurants});
     App.restregion.show(rcompview); 
+    
     $("#restaurant-group").on('hide.bs.collapse', function(){
         manipulateMarkers(restaurants,null);
       });  

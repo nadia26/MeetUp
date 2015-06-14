@@ -133,16 +133,13 @@ google.maps.Polyline.prototype.GetPointAtDistance = function(metres) {
     a = new google.maps.LatLng( p1.lat() + (p2.lat()-p1.lat())*m, p1.lng() + (p2.lng()-p1.lng())*m);
 
     //console logging from here works
-    var getEvents= $.ajax({
-    url: "http://api.eventful.com/json/events/search?&app_key=cWNxSHrggxxJH23h&where="+a.lat()+","+a.lng()+"&within=1&date=Today",
-    dataType: 'jsonp',
-    success: function(results){
-            for (i=0; i < results["events"]["event"].length; i++){
-                events.unshift(new EventModel(results["events"]["event"][""+i+""]));
-            }
-        }
-    });
+
+
+    
+    loadEventAPI();
+    eventInitialize();
     initializeEverything();
+    
     return a;
 }
 

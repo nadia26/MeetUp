@@ -11,14 +11,13 @@
 
 <script>
 var addresses = {{ addresses|tojson|safe }}
-console.log(addresses);
 var a;
 var map;
 var calcRoute;
 var eventsArray = [];
-var events;
+var events,ecompview;
 var initialized;
-var eventInitialize, setUpNewDate, initializeEverything;
+var eventInitialize, setUpNewDate, initializeEverything,loadEventAPI;
 var date;
 </script>
 
@@ -95,16 +94,21 @@ var date;
 <div class="panel-group" id="accordion" style="overflow: scroll;height: 70%;"role="tablist" aria-multiselectable="true">
 </div>
 </script>
-
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
                 meetUp
             </a>
-            {% if user %}
-                <p class="navbar-text navbar-right">Signed in as {{ user }}</p>
-            {% endif %}
+        </div>
+        <div class="collapse navbar-collapse" >
+          {% if user %}
+          <p class="navbar-text navbar-right">Signed in as {{ user }}</p>
+                <ul class="nav navbar-nav navbar-right">
+            <li><a href="/meetups">Your meetUps</a></li>
+            </ul>
+                
+        {% endif %}
         </div>
         
     </div>
@@ -191,9 +195,11 @@ var date;
      </div>
     
 <div id="midpoint-canvas" style="float:left;width:70%; height:100%"></div>
+
 <script src="../static/js/directions.js"></script>
 <script src="../static/js/places.js"></script>
 <script src="../static/js/events.js"></script>
+
 <script src="../static/js/dates.js"></script>
 
 {% endblock %}
