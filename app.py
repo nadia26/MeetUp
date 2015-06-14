@@ -32,7 +32,8 @@ def index():
         if request.form["b"] == "search":
             addresses = {
                 'address1':request.form['address1'],
-                'address2':request.form['address2']
+                'address2':request.form['address2'],
+                'mode': request.form['mode']
             }
             return redirect(url_for('directions', addresses=addresses))
         elif request.form["b"] == "logout":
@@ -49,8 +50,8 @@ def index():
 
 @app.route("/directions/<addresses>", methods=["GET", "POST"])
 def directions(addresses):
-    # if request.method == "POST":
-    return render_template("directions.html", addresses=addresses, user=session['user'])
+    #return render_template("directions.html", addresses=addresses, user=session['user'])
+    return render_template("directions.html", addresses=addresses)
 
 @app.route("/meetups",methods=["GET","POST"])
 def meetups():

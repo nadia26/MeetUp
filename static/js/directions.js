@@ -14,6 +14,7 @@ addresses = JSON.parse(addresses);
 
 var address1 = addresses['address1'];
 var address2 = addresses['address2'];
+var mode = addresses['mode'];
 
 
 var midpoint;
@@ -53,7 +54,7 @@ function initMid() {
 
 
 function findMiddle(start, end) {
-    var travelMode = google.maps.DirectionsTravelMode.TRANSIT
+    var travelMode = google.maps.DirectionsTravelMode.[mode]
     var request = {
     origin: start,
     destination: end,
@@ -171,7 +172,7 @@ function calcRoute(start, end, directionsDisplay) {
     var request = {
     origin:start,
     destination:end,
-    travelMode: google.maps.TravelMode.TRANSIT
+    travelMode: google.maps.TravelMode.[mode]
     };
     directionsService.route(request, function(result, status) {
                             if (status == google.maps.DirectionsStatus.OK) {
