@@ -5,12 +5,12 @@ import json
 from mongo_utils import register, authenticate, add_date, get_dates
 
 app=Flask(__name__)
+app.config["SECRET_KEY"] = "7182379192"
 addresses = {}
 @app.route("/register", methods=["GET","POST"])
 def signup():
     print "in register"
     if request.method == "POST":
-        print "YOUR MOTHER"
         password = request.form['password']
         username = request.form['username']
         register(username, password)
