@@ -2,8 +2,8 @@ from pymongo import MongoClient
 conn = MongoClient()
 db = conn["meetup"]
 
-def register(uname, pword):
-	db.accounts.insert({"username":uname,"password":pword,"dates":[]})
+def register(uname, pword, address):
+	db.accounts.insert({"username":uname,"password":pword,"address":address,"dates":[]})
 
 def authenticate(uname,pword):
 	user = db.accounts.find_one({"username":uname,"password":pword})

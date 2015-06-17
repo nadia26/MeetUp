@@ -10,3 +10,4 @@ function initialize() {
 google.maps.event.addDomListener(window, 'load', initialize);
 document.getElementById("myModal").style.visibility = "visible";
 document.getElementById("myModal").style.display = "inline";
+

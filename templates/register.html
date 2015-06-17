@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block head %}
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+{% endblock %}
 {% block body %}
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -28,6 +31,12 @@
 	    </div>
 	</div>
 	<div class="form-group">
+	    <label for="address" class="col-sm-2 control-label">Your Home Address</label>
+		<div class="col-sm-6">
+	      <input type="text" class="form-control" name="address" id="address" placeholder="Home Address">
+	    </div>
+	</div>
+	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 	      <button type="submit" class="btn btn-default">Create Account</button>
 	    </div>
@@ -35,4 +44,5 @@
 </form>
 
 </div>
+<script src="../static/js/register.js"></script>
 {% endblock %}

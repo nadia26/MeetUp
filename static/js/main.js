@@ -1,6 +1,9 @@
-
+var fillHomeAddress = function(address) {
+    document.getElementById("input1").value = address;
+}
 var locateButtons = document.getElementsByName("locate");
 var b1 = locateButtons[0];
+
 var setCurrentLocation = function(position) {
     var longitude = document.getElementById("longitude");
     var latitude = document.getElementById("latitude");

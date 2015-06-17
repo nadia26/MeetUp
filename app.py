@@ -13,8 +13,12 @@ def signup():
     if request.method == "POST":
         password = request.form['password']
         username = request.form['username']
-        register(username, password)
+        address = request.form['address']
+        print address
+        register(username, password,address)
         session['user'] = username
+        session['address'] = address
+        print session["address"]
         return redirect(url_for('index'))
     return render_template("register.html")
 
@@ -49,7 +53,7 @@ def index():
                 session["user"] = request.form["username"]
             return redirect(url_for("index"))
     
-    return render_template("main.html",user=session["user"])
+    return render_template("main.html",user=session["user"],address=session["address"])
 
 @app.route("/directions/<addresses>", methods=["GET", "POST"])
 def directions(addresses):
