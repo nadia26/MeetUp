@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block head %}
+<script>
+
+</script>
+{% endblock %}
+{% block body %}
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                meetUp
+            </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <p class="navbar-text navbar-right">Signed in as {{ user }}</p>
+        </div>
+    </div>
+</nav>
+<div class="container">
+	<h1>Your Friends</h1>
+
+	<h1>Friend Requests</h1>
+	<h3>Pending Requests<small> Requests you have received from other meetUp users</small></h3>
+	<h3>Sent Requests<small> Requests you've sent to other meetUp users</small></h3>
+	<div class="form-group">
+		<div class="row"
+			<div class="col-sm-4">
+				<label for="search">Search for meetUp users to add as friends</label>
+				<input id="search" class="form-control" placeholder="Username" name="search">
+			</div>
+		</div>
+		<div class="row">
+			<button class="btn btn-info" id="searchButton">Add Friend</button>
+		</div>
+	</div>
+</div>
+
+<script src="../static/js/friends.js"></script>
+{% endblock %}

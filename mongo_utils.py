@@ -13,7 +13,6 @@ def authenticate(uname,pword):
 
 def add_date(date, uname):
 	dates = db.accounts.find_one_and_update({"username":uname},{'$addToSet':{'dates':date}})
-	print dates
 	if dates:
                 print "succesfully added date"
 		return True
@@ -22,3 +21,16 @@ def add_date(date, uname):
 def get_dates(uname):
 	dates = db.accounts.find_one({'username':uname})['dates']
 	return dates
+
+def find_user(uname):
+	user = db.accounts.find_one({'username':uname});
+	return user
+
+def friend_request(requester, requestee):
+	user = find_user(requestee)
+	print user
+	if user:
+		db.accounts.find_one_and_update({"username":requester},{'$addToSet':{'sent_requests':requestee}})
+		db.accounts.find_one_and_update({"username":requestee},{'$addToSet':{'pending_requests':requester}})
+		return True
+	return False

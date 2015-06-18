@@ -2,7 +2,7 @@ from flask import Flask,request,url_for,redirect,render_template, session
 from pymongo import MongoClient
 from functools import wraps
 import json
-from mongo_utils import register, authenticate, add_date, get_dates
+from mongo_utils import *
 
 app=Flask(__name__)
 app.config["SECRET_KEY"] = "7182379192"
@@ -36,6 +36,7 @@ def index():
         user = session["user"]
     else:
         session["user"] = ""
+        session["address"] = ""
     if request.method == "POST":
         if request.form["b"] == "search":
             addresses = {
@@ -68,6 +69,21 @@ def meetups():
     if request.method == "GET":
         dates = [get_dates(session['user'])]
         return render_template("meetups.html", user=session['user'], dates=dates)
+
+@app.route("/friends",methods=["GET","POST"])
+def friends():
+    if session and "user" in session:
+        user = session["user"]
+    else:
+        session["user"] = ""
+    if request.method == "GET":
+
+        return render_template("friends.html",user=session['user'])
+
+@app.route("/friendrequest/<requestee>", methods=["GET","POST"])
+def friendrequest(requestee):
+    success = friend_request(session["user"],requestee)
+    return redirect(url_for('friends'))
 
 if __name__=="__main__":
     app.debug=True
