@@ -1,4 +1,4 @@
-# meetUp
+# MeetUp
 ##Aida Piccato, Sydney Caputo, Nadia Saleh
 
 ## Demo: https://www.youtube.com/watch?v=i_xDQg35T20
